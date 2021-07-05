@@ -1,0 +1,42 @@
+local Netless0 = coroutine.create(function()
+	local NPlayer = game.Players.LocalPlayer
+	local NCharacter = NPlayer.Character
+	local NHumanoid = NCharacter.Humanoid
+
+	local NValue
+	if _G.NetlessPos == "X" then
+		NValue = Vector3.new(_G.NetlessValue, 0, 0)
+	elseif _G.NetlessPos == "Y" then
+		NValue = Vector3.new(0, _G.NetlessValue, 0)
+	elseif _G.NetlessPos == "Z" then
+		NValue = Vector3.new(0, 0, _G.NetlessValue)
+	else
+		NValue = Vector3.new(0, _G.NetlessValue, 0)
+	end
+
+    game["Run Service"].RenderStepped:Connect(function()
+		sethiddenproperty(Player , "SimulationRadius", math.huge)
+        sethiddenproperty(Player , "MaximumSimulationRadius", math.huge)
+        setsimulationradius(9e9, 9e9)
+		settings().Physics.AllowSleep = false
+		game.Workspace.FallenPartsDestroyHeight = 0
+		local Netless1 = coroutine.create(function()
+			while true do
+				game["Run Service"].Heartbeat:Wait()
+				NHumanoid.HipHeight = NHumanoid.HipHeight + 0.09
+				game["Run Service"].Heartbeat:Connect(function()
+					for _,v in pairs(NCharacter:GetChildren()) do
+						if v:IsA("Accessory") then
+							v.Handle.Velocity = NValue
+						end
+					end
+				end)
+				NHumanoid.HipHeight = NHumanoid.HipHeight - 0.09
+			end
+		end)
+		coroutine.resume(Netless1)
+	end)
+end)
+coroutine.resume(Netless0)
+
+wait(2.5)

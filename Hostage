@@ -1,0 +1,258 @@
+
+
+
+	local unanchoredparts = {}
+	local movers = {}
+	local tog = true
+	local move = false
+	local Player = game:GetService("Players").LocalPlayer
+	local Character = Player.Character
+	local mov = {};
+	local mov2 = {};
+
+	local x = -0.011   --Edit Position for head n +left and -Right
+	local y = -0.587   --Edit Position for head up and down
+	local z = -3.234 --Edit Position for head x3
+
+	local ClonedHats = {
+		idk = Character:WaitForChild("Nagamaki"):Clone(),
+		arm = Character:WaitForChild("Pal Hair"):Clone()
+	}
+
+	local RealHats = {
+		idk = Character:WaitForChild("Nagamaki"),
+		arm = Character:WaitForChild("Pal Hair")
+	}
+
+	local DontRemoveMesh = {
+		"Nagamaki"
+	}
+
+	--Dont touch below
+
+wait()
+
+	local realign = coroutine.create(function()
+		while true do
+			game["Run Service"].Heartbeat:Wait()
+			RealHats.idk.Handle.CFrame = ClonedHats.idk.Handle.CFrame
+			RealHats.arm.Handle.CFrame = ClonedHats.arm.Handle.CFrame
+		end
+	end)
+	coroutine.resume(realign)
+
+	for i, v in next, ClonedHats do
+		if v then
+			v.Parent = Character
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	for i, v in next, RealHats do
+		if v then
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	local function align(i,v)
+		local att0 = Instance.new("Attachment", i)
+		att0.Position = Vector3.new(0,0,0)
+		local att1 = Instance.new("Attachment", v)
+		att1.Position = Vector3.new(0,0,0)
+		local AP = Instance.new("AlignPosition", i)
+		AP.Attachment0 = att0
+		AP.Attachment1 = att1
+		AP.RigidityEnabled = false
+		AP.ReactionForceEnabled = false
+		AP.ApplyAtCenterOfMass = true
+		AP.MaxForce = 9999999
+		AP.MaxVelocity = math.huge
+		AP.Responsiveness = 65
+		local AO = Instance.new("AlignOrientation", i)
+		AO.Attachment0 = att0
+		AO.Attachment1 = att1
+		AO.ReactionTorqueEnabled = true
+		AO.PrimaryAxisOnly = false
+		AO.MaxTorque = 9999999
+		AO.MaxAngularVelocity = math.huge
+		AO.Responsiveness = 50
+	end
+
+	--Dont touch above
+
+	align(ClonedHats.idk.Handle, Character["Torso"])
+	align(ClonedHats.arm.Handle, Character["Torso"])
+
+	Character:WaitForChild("Torso"):FindFirstChild("Attachment").Name = "Sword"
+	Character:WaitForChild("Torso"):FindFirstChild("Attachment").Name = "Arm"
+
+	local Sword = Character:WaitForChild("Torso"):FindFirstChild("Sword")
+	local Arm = Character:WaitForChild("Torso"):FindFirstChild("Arm")
+
+	local mouse = game.Players.LocalPlayer:GetMouse()
+
+	local IsGrabbing = false
+	local Equipped = false
+
+
+	Character["Right Arm"]:Destroy()
+
+--[[
+
+--
+Sword.Orientation = Vector3.new()
+Sword.Position = Vector3.new()
+--
+Arm.Orientation = Vector3.new()
+Arm.Position = Vector3.new()
+--
+
+]]--
+
+	local function StartPos()
+		--
+		Sword.Orientation = Vector3.new(-1.949, 1.151, -87.353)
+		Sword.Position = Vector3.new(0.147, 0.152, 0.796)
+		--
+		Arm.Orientation = Vector3.new(90, 0, 0)
+		Arm.Position = Vector3.new(1.478, -0.02, 0)
+		--
+	end
+
+	local function Equip()
+		--
+		Sword.Orientation = Vector3.new(-1.949, 1.151, -87.353)
+		Sword.Position = Vector3.new(0.147, 0.152, 0.796)
+		--
+		Arm.Orientation = Vector3.new(-71.098, 0, -0)
+		Arm.Position = Vector3.new(1.478, 1.163, 0.405)
+		--
+		wait(.2)
+		--
+		Sword.Orientation = Vector3.new(8.181, 20.658, 99.971)
+		Sword.Position = Vector3.new(3.684, 2.087, -0.205)
+		--
+		Arm.Orientation = Vector3.new(-2.29, 89.216, -81.582)
+		Arm.Position = Vector3.new(2.008, 0.403, -0.039)
+		--
+		wait(.2)
+		--
+		Sword.Orientation = Vector3.new(-0.753, 104.056, 112.12)
+		Sword.Position = Vector3.new(1.499, 1.179, -1.322)
+		--
+		Arm.Orientation = Vector3.new(15.326, -179.155, -95.471)
+		Arm.Position = Vector3.new(1.558, 0.259, -0.401)
+		--
+	end
+
+	local function UnEquip()
+		--
+		Sword.Orientation = Vector3.new(-9.395, 71.25, 128.211)
+		Sword.Position = Vector3.new(1.475, 1.262, -1.155)
+		--
+		Arm.Orientation = Vector3.new(14.354, 174.023, -95.403)
+		Arm.Position = Vector3.new(1.576, 0.294, -0.353)
+		--
+		wait(.2)
+		--
+		Sword.Orientation = Vector3.new(16.132, 96.99, -127.729)
+		Sword.Position = Vector3.new(1.633, 1.633, 1.179)
+		--
+		Arm.Orientation = Vector3.new(-87.847, 52.8, 44.549)
+		Arm.Position = Vector3.new(1.547, 1.14, 0.022)
+		--
+		wait(.2)
+		--
+		Sword.Orientation = Vector3.new(-1.949, 1.151, -87.353)
+		Sword.Position = Vector3.new(0.147, 0.152, 0.796)
+		--
+		Arm.Orientation = Vector3.new(-39.436, -23.732, 31.676)
+		Arm.Position = Vector3.new(1.434, 1.086, 0.434)
+		--
+		wait(.2)
+		StartPos()
+	end
+
+	local function Hold()
+		--
+		Sword.Orientation = Vector3.new(-75.566, 89.91, 120.342)
+		Sword.Position = Vector3.new(0.342, 1.109, -1.534)
+		--
+		Arm.Orientation = Vector3.new(-10.232, 169.364, -166.639)
+		Arm.Position = Vector3.new(1.302, 0.677, -0.765)
+		--
+	end
+
+	StartPos()
+
+	mouse.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "e" then
+			if Equipped == false then
+				Equip()
+				Equipped = true
+			else
+				UnEquip()
+				IsGrabbing = false
+				Equipped = false
+			end
+		end
+	end)
+
+	mouse.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "q" then
+			if IsGrabbing == true then
+				if Equipped == true then
+					IsGrabbing = false
+					Equip()
+				else
+					IsGrabbing = false
+					UnEquip()
+				end
+			end
+		end
+	end)
+
+	mouse.Button1Down:Connect(function()
+		if Equipped == false or IsGrabbing == true then return end
+		if mouse.Target.Name == "Baseplate" or mouse.Target == nil then return end
+
+		if mouse.Target.Parent:IsA("Accessory") then
+			if IsGrabbing == true then return end
+			local Plr = mouse.Target.Parent.Parent.Name
+			IsGrabbing = true
+			while wait() do
+				if IsGrabbing == false then return end
+				Hold()
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:FindFirstChild(Plr).HumanoidRootPart.CFrame + workspace:FindFirstChild(Plr).HumanoidRootPart.CFrame.LookVector* -1.1 
+			end
+		else
+			if mouse.Target.Parent:FindFirstChild("Humanoid") then
+				if IsGrabbing == true then return end
+				local Plr = mouse.Target.Parent.Name
+				IsGrabbing = true
+				while wait() do
+					if IsGrabbing == false then return end
+					Hold()
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:FindFirstChild(Plr).HumanoidRootPart.CFrame + workspace:FindFirstChild(Plr).HumanoidRootPart.CFrame.LookVector* -1.1 
+				end
+			end
+		end
+	end)

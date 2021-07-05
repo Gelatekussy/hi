@@ -1,0 +1,146 @@
+
+
+	-- The Rest
+	local Player = game.Players.LocalPlayer
+	local Character = Player.Character
+	local Mouse = Player:GetMouse()
+
+	local ClonedHats = {
+		Hat1 = Character:WaitForChild("Pal Hair"):Clone(),
+		Hat2 = Character:WaitForChild("Rainbow Flag"):Clone(),
+		Hat3 = Character:WaitForChild("FireMohawk"):Clone(),
+
+
+	}
+	local RealHats = {
+		Hat1 = Character:WaitForChild("Pal Hair"),
+		Hat2 = Character:WaitForChild("Rainbow Flag"),
+		Hat3 = Character:WaitForChild("FireMohawk"),
+
+	}
+
+	local DontRemoveMesh = {
+		"FireMohawk",
+		"Rainbow Flag",
+	}
+
+	-- Alings Real Hats to the Cloned Hats
+	local realign = coroutine.create(function()
+		while true do
+			game["Run Service"].Heartbeat:Wait()
+			RealHats.Hat1.Handle.CFrame = ClonedHats.Hat1.Handle.CFrame
+			RealHats.Hat2.Handle.CFrame = ClonedHats.Hat2.Handle.CFrame
+			RealHats.Hat3.Handle.CFrame = ClonedHats.Hat3.Handle.CFrame
+		end
+	end)
+	coroutine.resume(realign)
+
+	-- Removes Meshes And Welds
+	for i, v in next, ClonedHats do
+		if v then
+			v.Parent = Character
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	for i, v in next, RealHats do
+		if v then
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	-- Align Function
+	local function Align(Hat, Body)
+		local A0 = Instance.new("Attachment", Hat)
+		A0.Position = Vector3.new(0, 0, 0)
+
+		local A1 = Instance.new("Attachment", Body)
+		A1.Position = Vector3.new(0, 0, 0)
+
+		local AlignP = Instance.new("AlignPosition", Hat)
+		AlignP.Attachment0 = A0
+		AlignP.Attachment1 = A1
+		AlignP.RigidityEnabled = false
+		AlignP.ReactionForceEnabled = false
+		AlignP.ApplyAtCenterOfMass = true
+		AlignP.MaxForce = 999999999
+		AlignP.MaxVelocity = math.huge
+		AlignP.Responsiveness = 65
+
+		local AlignO = Instance.new("AlignOrientation", Hat)
+		AlignO.Attachment0 = A0
+		AlignO.Attachment1 = A1
+		AlignO.ReactionTorqueEnabled = true
+		AlignO.PrimaryAxisOnly = false
+		AlignO.MaxTorque = 999999999
+		AlignO.MaxAngularVelocity = math.huge
+		AlignO.Responsiveness = 50
+	end
+
+    Character["Right Arm"]:Destroy()
+
+	Align(ClonedHats.Hat1.Handle, Character.HumanoidRootPart)
+	Align(ClonedHats.Hat2.Handle, Character.HumanoidRootPart)
+	Align(ClonedHats.Hat3.Handle, Character.HumanoidRootPart)
+
+	Character.HumanoidRootPart:FindFirstChild("Attachment").Name = "Hat1"
+	Character.HumanoidRootPart:FindFirstChild("Attachment").Name = "Hat2"
+	Character.HumanoidRootPart:FindFirstChild("Attachment").Name = "Hat3"
+
+
+	local Hat1 = Character.HumanoidRootPart:FindFirstChild("Hat1")
+	local Hat2 = Character.HumanoidRootPart:FindFirstChild("Hat2")
+	local Hat3 = Character.HumanoidRootPart:FindFirstChild("Hat3")
+	--- arm shit ----
+	local movey = coroutine.create(function()
+		while true do
+			Hat1.Position = Vector3.new(1.5,1.3,-0)
+			Hat1.Orientation = Vector3.new(90,90,0)
+			wait(0.1)
+			---------Flag Shit ------------
+			Hat2.Position = Vector3.new(1.5,3.9,-0)
+			Hat2.Orientation = Vector3.new(0,0,-30)
+			------ fire shit ------------
+			Hat3.Position = Vector3.new(2.5,5,-0)
+			Hat3.Orientation = Vector3.new(0,90,0)
+			wait(0.1)
+			----------------------------------------
+			Hat1.Position = Vector3.new(1.9,1.3,-0)
+			Hat1.Orientation = Vector3.new(165,90,0)
+			---------Flag Shit ------------
+			Hat2.Position = Vector3.new(4.5,2,-0)
+			Hat2.Orientation = Vector3.new(0,0,-106)
+			------ fire shit ------------
+			Hat3.Position = Vector3.new(5.7,1.7,-0)
+			Hat3.Orientation = Vector3.new(35,90,0)
+			wait(0.2)
+			---------------------------------------
+			Hat1.Position = Vector3.new(1.5,1.3,-0)
+			Hat1.Orientation = Vector3.new(75,90,0)
+			wait(0.1)
+			---------Flag Shit ------------
+			Hat2.Position = Vector3.new(1,3.9,-0)
+			Hat2.Orientation = Vector3.new(0,0,-20)
+			------ fire sshit ------------
+			Hat3.Position = Vector3.new(1.9,5,-0)
+			Hat3.Orientation = Vector3.new(5,90,0)
+			wait(0.1)
+		end
+	end)
+	coroutine.resume(movey)

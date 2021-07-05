@@ -1,0 +1,693 @@
+local playanother = false
+local playing = false
+local rtrnv;
+local c;
+local tbl3;
+local v;
+local anim;
+local count;
+local hhhh;
+local asdf;
+local s;
+local animid;
+local plr;
+local char;
+local cframe;
+local torso;
+local rs;
+local ls;
+local rh;
+local lh;
+local n;
+local rj;
+local rsc0;
+local lsc0;
+local rhc0;
+local lhc0;
+local rjc0;
+local nc0;
+local gc0;
+local orsc0;
+local olsc0;
+local orhc0;
+local olhc0;
+local orjc0;
+local onc0;
+local count2;
+local maxcount2;
+
+local function getnext(tbl,number)
+	c=100
+	rtrnv=0
+	for i,v in pairs(tbl) do
+		if i>number and i-number<c then
+			c=i-number
+			rtrnv=i
+		end
+	end
+	return(rtrnv)
+end
+local function wait2(tim)
+	if tim<0.1 then
+		game:GetService("RunService").Heartbeat:Wait()
+	else
+		for i=1,tim*40 do
+			game:GetService("RunService").Heartbeat:Wait()
+		end
+	end
+end
+local function kftotbl(kf) -- Below this is literal pain..
+	tbl3 = {}
+	for i,v in pairs(kf:GetDescendants()) do
+		if v:IsA("Pose") then
+			tbl3[v.Name] = v.CFrame
+		end
+	end
+	return(tbl3)
+end
+
+local AnimPlayer = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local UnderFrame = Instance.new("Frame")
+local Container = Instance.new("Frame")
+local ID = Instance.new("TextBox")
+local UnderFrame_2 = Instance.new("Frame")
+local Play = Instance.new("TextButton")
+local UnderFrame_3 = Instance.new("Frame")
+local Animate = Instance.new("TextButton")
+local UnderFrame_4 = Instance.new("Frame")
+local SoundId = Instance.new("TextBox")
+local UnderFrame_5 = Instance.new("Frame")
+local Shadow = Instance.new("ImageLabel")
+
+--Properties:
+
+AnimPlayer.Name = "AnimPlayer"
+--syn.protect_gui(AnimPlayer)
+AnimPlayer.Parent = game:GetService("CoreGui")
+
+Main.Name = "Main"
+Main.Parent = AnimPlayer
+Main.Active = true
+Main.Draggable = true
+Main.AnchorPoint = Vector2.new(0.5, 0.5)
+Main.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.5, 0, 0.5, 0)
+Main.Size = UDim2.new(0, 435, 0, 177)
+
+Title.Name = "Title"
+Title.Parent = Main
+Title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Title.BorderSizePixel = 0
+Title.Size = UDim2.new(1, 0, 0, 33)
+Title.Font = Enum.Font.GothamSemibold
+Title.Text = "  R15 ANIMATION ID PLAYER"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 18.000
+Title.TextWrapped = true
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+UnderFrame.Name = "UnderFrame"
+UnderFrame.Parent = Title
+UnderFrame.BackgroundColor3 = Color3.fromRGB(247, 190, 19)
+UnderFrame.BorderSizePixel = 0
+UnderFrame.Position = UDim2.new(0, 0, 1, 0)
+UnderFrame.Size = UDim2.new(1.00129366, 0, 0, 2)
+UnderFrame.ZIndex = 2
+
+Container.Name = "Container"
+Container.Parent = Title
+Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Container.BackgroundTransparency = 1.000
+Container.BorderSizePixel = 0
+Container.Position = UDim2.new(0, 0, 1.060606, 0)
+Container.Size = UDim2.new(0, 280, 0, 174)
+
+ID.Name = "ID"
+ID.Parent = Container
+ID.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ID.BorderSizePixel = 0
+ID.Position = UDim2.new(0.032142859, 0, 0.0574712679, 0)
+ID.Size = UDim2.new(0, 416, 0, 34)
+ID.Font = Enum.Font.Gotham
+ID.PlaceholderText = "Animation ID"
+ID.Text = ""
+ID.TextColor3 = Color3.fromRGB(255, 255, 255)
+ID.TextSize = 14.000
+ID.ClearTextOnFocus = true
+
+UnderFrame_2.Name = "UnderFrame"
+UnderFrame_2.Parent = ID
+UnderFrame_2.BackgroundColor3 = Color3.fromRGB(247, 190, 19)
+UnderFrame_2.BorderSizePixel = 0
+UnderFrame_2.Position = UDim2.new(0, 0, 1, 0)
+UnderFrame_2.Size = UDim2.new(1.00129366, 0, 0, 2)
+UnderFrame_2.ZIndex = 2
+
+Play.Name = "Play"
+Play.Parent = Container
+Play.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Play.BorderSizePixel = 0
+Play.Position = UDim2.new(0.200000003, 0, 0.563218415, 0)
+Play.Size = UDim2.new(0, 154, 0, 33)
+Play.AutoButtonColor = false
+Play.Font = Enum.Font.Gotham
+Play.Text = "PLAY"
+Play.TextColor3 = Color3.fromRGB(255, 255, 255)
+Play.TextSize = 18.000
+
+UnderFrame_3.Name = "UnderFrame"
+UnderFrame_3.Parent = Play
+UnderFrame_3.BackgroundColor3 = Color3.fromRGB(247, 190, 19)
+UnderFrame_3.BorderSizePixel = 0
+UnderFrame_3.Position = UDim2.new(0, 0, 1, 0)
+UnderFrame_3.Size = UDim2.new(1.00129366, 0, 0, 2)
+UnderFrame_3.ZIndex = 2
+
+Animate.Name = "Animate"
+Animate.Parent = Container
+Animate.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Animate.BorderSizePixel = 0
+Animate.Position = UDim2.new(0.797115445, 0, 0.563218415, 0)
+Animate.Size = UDim2.new(0, 154, 0, 33)
+Animate.AutoButtonColor = false
+Animate.Font = Enum.Font.Gotham
+Animate.Text = "ANIMATE"
+Animate.TextColor3 = Color3.fromRGB(255, 255, 255)
+Animate.TextSize = 18.000
+
+UnderFrame_4.Name = "UnderFrame"
+UnderFrame_4.Parent = Animate
+UnderFrame_4.BackgroundColor3 = Color3.fromRGB(247, 190, 19)
+UnderFrame_4.BorderSizePixel = 0
+UnderFrame_4.Position = UDim2.new(0, 0, 1, 0)
+UnderFrame_4.Size = UDim2.new(1.00129366, 0, 0, 2)
+UnderFrame_4.ZIndex = 2
+
+SoundId.Name = "SoundId"
+SoundId.Parent = Container
+SoundId.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+SoundId.BorderSizePixel = 0
+SoundId.Position = UDim2.new(0.032142859, 0, 0.298850596, 0)
+SoundId.Size = UDim2.new(0, 416, 0, 34)
+SoundId.Font = Enum.Font.Gotham
+SoundId.PlaceholderText = "Sound ID"
+SoundId.Text = ""
+SoundId.TextColor3 = Color3.fromRGB(255, 255, 255)
+SoundId.TextSize = 14.000
+SoundId.ClearTextOnFocus = true
+
+UnderFrame_5.Name = "UnderFrame"
+UnderFrame_5.Parent = SoundId
+UnderFrame_5.BackgroundColor3 = Color3.fromRGB(247, 190, 19)
+UnderFrame_5.BorderSizePixel = 0
+UnderFrame_5.Position = UDim2.new(0, 0, 1, 0)
+UnderFrame_5.Size = UDim2.new(1.00129366, 0, 0, 2)
+UnderFrame_5.ZIndex = 2
+
+Shadow.Name = "Shadow"
+Shadow.Parent = Main
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.BackgroundTransparency = 1.000
+Shadow.BorderSizePixel = 0
+Shadow.Position = UDim2.new(0.501694381, 0, 0.510582864, 0)
+Shadow.Size = UDim2.new(1.01198816, 18, 1.03845322, 18)
+Shadow.ZIndex = 0
+Shadow.Image = "rbxassetid://1316045217"
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageTransparency = 0.700
+Shadow.ScaleType = Enum.ScaleType.Slice
+Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
+
+-- Scripts:
+
+Play.MouseButton1Down:Connect(function()
+    if ID.Text ~= "" then
+        if playing == true then
+			s:Destroy()
+			playing = false
+			playanother = true
+		end
+		wait()
+		spawn(function()
+			if playanother == true then
+				playanother = false
+			end
+			playing = true
+			s = Instance.new("Sound", game:GetService("Players").LocalPlayer.Character["Dummy"].UpperTorso)
+			if SoundId.Text ~= "" then
+				s.SoundId = "rbxassetid://"..SoundId.Text
+			end
+			s.Looped = true
+			s.Playing = true
+			wait(.1) -- Do not change because changing it will break.
+			animid="rbxassetid://".. ID.Text
+			plr = game.Players.LocalPlayer
+			char = game:GetService("Players").LocalPlayer.Character["Dummy"]
+			cframe = char.HumanoidRootPart.CFrame
+			utorso = game:GetService("Players").LocalPlayer.Character["Dummy"].UpperTorso
+			ltorso = game:GetService("Players").LocalPlayer.Character["Dummy"].LowerTorso
+			-----------------------------------------------------------
+			rus = char["RightUpperArm"]["RightShoulder"]
+			lus = char["LeftUpperArm"]["LeftShoulder"]
+			rls = char["RightLowerArm"]["RightElbow"]
+			lls = char["LeftLowerArm"]["LeftElbow"]
+			rw = char["RightHand"]["RightWrist"]
+			lw = char["LeftHand"]["LeftWrist"]
+			ruh = char["RightUpperLeg"]["RightHip"]
+			luh = char["LeftUpperLeg"]["LeftHip"]
+			rlh = char["RightLowerLeg"]["RightKnee"]
+			llh = char["LeftLowerLeg"]["LeftKnee"]
+			rf = char["RightFoot"]["RightAnkle"]
+			lf = char["LeftFoot"]["LeftAnkle"]
+			n = char.Head["Neck"]
+            ut = char.UpperTorso.Waist
+            lt = char.LowerTorso.Root
+			rusc0 = rus.C0
+			lusc0 = lus.C0
+			rlsc0 = rls.C0
+			llsc0 = lls.C0
+			rwc0 = rw.C0
+			lwc0 = lw.C0
+			ruhc0 = ruh.C0
+			luhc0 = luh.C0
+			rlhc0 = rlh.C0
+			llhc0 = llh.C0
+			rfc0 = rf.C0
+			lfc0 = lf.C0
+			nc0 = n.C0
+            utc0 = ut.C0
+            ltc0 = lt.c0
+			gc0 = CFrame.new()
+			orrusc0 = rus.C0
+			orlusc0 = lus.C0
+			orrlsc0 = rls.C0
+			orllsc0 = lls.C0
+			orrwc0 = rw.C0
+			orlwc0 = lw.C0
+			orruhc0 = ruh.C0
+			orluhc0 = luh.C0
+			orrlhc0 = rlh.C0
+			orllhc0 = llh.C0
+			orrfc0 = rf.C0
+			orlfc0 = lf.C0
+			ornc0 = n.C0
+            orutc0 = ut.C0
+            orltc0 = lt.c0
+			count2 = 100
+			maxcount2=100
+			-----------------------------------------------------------
+			game:GetService("RunService").Heartbeat:Connect(function() -- Speed.
+				if playanother == true then
+					return nil
+				else
+					count2 = count2+1
+					if count2<=maxcount2 then
+						rus.Transform=rus.Transform:Lerp(rusc0,count2/maxcount2)
+						lus.Transform=lus.Transform:Lerp(lusc0,count2/maxcount2)
+						rls.Transform=rls.Transform:Lerp(rlsc0,count2/maxcount2)
+						lls.Transform=lls.Transform:Lerp(llsc0,count2/maxcount2)
+						rw.Transform=rw.Transform:Lerp(rwc0,count2/maxcount2)
+						lw.Transform=lw.Transform:Lerp(lwc0,count2/maxcount2)
+						ruh.Transform=ruh.Transform:Lerp(ruhc0,count2/maxcount2)
+						luh.Transform=luh.Transform:Lerp(luhc0,count2/maxcount2)
+						rlh.Transform=rlh.Transform:Lerp(rlhc0,count2/maxcount2)
+						llh.Transform=llh.Transform:Lerp(llhc0,count2/maxcount2)
+						rf.Transform=rf.Transform:Lerp(rfc0,count2/maxcount2)
+						lf.Transform=lf.Transform:Lerp(lfc0,count2/maxcount2)
+						n.Transform=n.Transform:Lerp(nc0,count2/maxcount2)
+						ut.Transform=ut.Transform:Lerp(utc0,count2/maxcount2)
+						lt.Transform=lt.Transform:Lerp(ltc0,count2/maxcount2)
+					end
+				end
+			end)
+			-----------------------------------------------------------
+			animid=game:GetObjects(animid)[1]
+			anim={}
+			for i,v in pairs(animid:GetChildren()) do
+				if v:IsA("Keyframe") then
+					anim[v.Time]=kftotbl(v)
+				end
+			end
+
+			count = 0
+			char=game:GetService("Players").LocalPlayer.Character["Dummy"]
+			hhhh=game:GetService("Players").LocalPlayer.Character["Dummy"].Humanoid.Animator
+			hhhh.Parent = nil
+			for _,v in pairs(char.Humanoid:GetPlayingAnimationTracks()) do
+				v:Stop()
+			end
+			
+			hhhh:Destroy()
+			char.Animate:Destroy()
+
+			plr.CharacterRemoving:Connect(function()
+				if playing == true then
+					playing = false
+				end
+			end)
+
+			while wait() do
+				if playanother == true then
+					break
+				else
+					for i,oasjdadlasdkadkldjkl in pairs(anim) do
+						asdf=getnext(anim,count)
+						v=anim[asdf]
+						if v["LeftUpperArm"] then
+							lusc0 = v["LeftUpperArm"]
+						end
+						if v["RightUpperArm"] then
+							rusc0 = v["RightUpperArm"]
+						end
+						if v["LeftLowerArm"] then
+							llsc0 = v["LeftLowerArm"]
+						end
+						if v["RightUpperArm"] then
+							rlsc0 = v["RightLowerArm"]
+						end
+						if v["LeftHand"] then
+							lwc0 = v["LeftHand"]
+						end
+						if v["RightHand"] then
+							rwc0 = v["RightHand"]
+						end
+						if v["LeftUpperALeg"] then
+							luhc0 = v["LeftUpperLeg"]
+						end
+						if v["RightUpperLeg"] then
+							ruhc0 = v["RightUpperLeg"]
+						end
+						if v["LeftLowerLeg"] then
+							llhc0 = v["LeftLowerLeg"]
+						end
+						if v["RightUpperLeg"] then
+							rlhc0 = v["RightLowerLeg"]
+						end
+						if v["LeftFoot"] then
+							lfc0 = v["LeftFoot"]
+						end
+						if v["RightFoot"] then
+							rfc0 = v["RightFoot"]
+						end
+						if v["UpperTorso"] then
+							utc0 = v["UpperTorso"]
+						end
+						if v["LowerTorso"] then
+							ltc0 = v["LowerTorso"]
+						end
+						if v["Head"] then
+							nc0 = v["Head"]
+						end
+						count2=0
+						maxcount2=asdf-count
+						count=asdf
+						wait(asdf-count)
+						count2=maxcount2
+						if v["LeftUpperArm"] then
+							char["LeftUpperArm"]["LeftShoulder"].Transform = v["LeftUpperArm"]
+						end
+						if v["RightUpperArm"] then
+							char["RightUpperArm"]["RightShoulder"].Transform = v["RightUpperArm"]
+						end
+						if v["LeftLowerArm"] then
+							char["LeftLowerArm"]["LeftElbow"].Transform = v["LeftLowerArm"]
+						end
+						if v["RightUpperArm"] then
+							char["RightLowerArm"]["RightElbow"].Transform = v["RightLowerArm"]
+						end
+						if v["LeftHand"] then
+							char["LeftHand"]["LeftWrist"].Transform = v["LeftHand"]
+						end
+						if v["RightHand"] then
+							char["RightHand"]["RightWrist"].Transform = v["RightHand"]
+						end
+--
+						if v["LeftUpperLeg"] then
+							char["LeftUpperLeg"]["LeftHip"].Transform = v["LeftUpperLeg"]
+						end
+						if v["RightUpperLeg"] then
+							char["RightUpperLeg"]["RightHip"].Transform = v["RightUpperLeg"]
+						end
+						if v["LeftLowerLeg"] then
+							char["LeftLowerLeg"]["LeftKnee"].Transform = v["LeftLowerLeg"]
+						end
+						if v["RightUpperLeg"] then
+							char["RightLowerLeg"]["RightKnee"].Transform = v["RightLowerLeg"]
+						end
+						if v["LeftFoot"] then
+							char["LeftFoot"]["LeftAnkle"].Transform = v["LeftFoot"]
+						end
+						if v["RightFoot"] then
+							char["RightFoot"]["RightAnkle"].Transform = v["RightFoot"]
+						end
+						if v["UpperTorso"] then
+							char.UpperTorso["Waist"].Transform = v["UpperTorso"]
+						end
+						if v["LowerTorso"] then
+							char.LowerTorso["Root"].Transform = v["LowerTorso"]
+						end
+						if v["Head"] then
+							char.Head["Neck"].Transform = v["Head"]
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
+Animate.MouseButton1Down:Connect(function()
+
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+
+game:GetService('RunService').Stepped:Connect(function()
+    for _,v in pairs(Character:GetDescendants()) do
+        if v:IsA("Part" or "BasePart") then
+            v.CanCollide = false
+        end
+    end
+    
+    Character.Head.CanCollide = false
+end)
+
+--[[Rigging]]
+Character.RightUpperArm["RightShoulder"]:Destroy()
+Character.RightLowerArm["RightElbow"]:Destroy()
+Character.RightHand["RightWrist"]:Destroy()
+
+Character.LeftUpperArm["LeftShoulder"]:Destroy()
+Character.LeftLowerArm["LeftElbow"]:Destroy()
+Character.LeftHand["LeftWrist"]:Destroy()
+
+Character.LeftUpperLeg["LeftHip"]:Destroy()
+Character.LeftLowerLeg["LeftKnee"]:Destroy()
+Character.LeftFoot["LeftAnkle"]:Destroy()
+
+Character.RightUpperLeg["RightHip"]:Destroy()
+Character.RightLowerLeg["RightKnee"]:Destroy()
+Character.RightFoot["RightAnkle"]:Destroy()
+
+--[[Dummy]]
+game.Players.LocalPlayer.Character.Archivable = true
+
+local CloneChar = Character:Clone()
+CloneChar.Name = "Dummy"
+CloneChar.Parent = Character
+
+for _,v in pairs(CloneChar:GetChildren()) do
+    if v:IsA("Accessory") then
+        v:Destroy()
+    end
+
+    if v:IsA("Part" or "BasePart") then
+        v.Transparency = 1
+        v.CanCollide = false
+    end
+end
+--for some reason the body keeps moving around
+function NoCollisionConstraint(same)
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("BasePart") then
+            Collide = Instance.new("NoCollisionConstraint",v)
+            Collide.Part0 = v
+            Collide.Part1 = same
+        end
+    end
+end
+
+for i,v in pairs(Character:GetDescendants()) do
+    if v:IsA("BasePart") then
+        NoCollisionConstraint(v)
+    end
+end
+
+--[[Dummy Settings]]
+CloneChar:MoveTo(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
+CloneChar.Humanoid:Move(game.Players.LocalPlayer.Character.Humanoid.MoveDirection, false)
+CloneChar.HumanoidRootPart.Anchored = false
+CloneChar.Humanoid.BreakJointsOnDeath = false
+
+--[[Align]]
+local Align = function(Part0, Part1)
+    local Attach0 = Instance.new("Attachment", Part0)
+    local Attach1 = Instance.new("Attachment", Part1)
+
+    local Position = Instance.new("AlignPosition", Part0)
+    Position.RigidityEnabled = false;
+    Position.MaxVelocity = math.huge;
+    Position.Responsiveness = math.huge;
+    Position.ApplyAtCenterOfMass = false;
+    Position.MaxForce = 20000;
+    Position.ReactionForceEnabled = false;
+
+    local Orientation = Instance.new("AlignOrientation", Part0)
+    Orientation.MaxTorque = 20000;
+    Orientation.ReactionTorqueEnabled = false;
+    Orientation.PrimaryAxisOnly = false;
+    Orientation.Responsiveness = math.huge;
+    Orientation.MaxAngularVelocity = math.huge;
+
+    Orientation.Attachment0 = Attach0;
+    Orientation.Attachment1 = Attach1;
+    Position.Attachment0 = Attach0;
+    Position.Attachment1 = Attach1;
+
+    game:GetService("RunService").Heartbeat:Connect(
+        function()
+            Part0.Velocity = Vector3.new(-25.05, 0, -25.05)
+            --Part0.CFrame = Part1.CFrame
+        end
+    )
+
+    --Part0.Anchored = false
+
+    return a0
+end
+
+spawn(function()
+    while true do wait()
+        Character.HumanoidRootPart.CFrame = CloneChar.HumanoidRootPart.CFrame
+    end
+end)
+
+for i,v in next, CloneChar:GetDescendants() do
+if v:IsA("BasePart") then
+v.Transparency = 1
+end
+end
+
+--Character.HumanoidRootPart.Transparency = 0.5
+-- ^^ used for dev purposes
+local LeftUpperArm = Character:FindFirstChild("LeftUpperArm")
+local LeftLowerArm = Character:FindFirstChild("LeftLowerArm")
+local LeftHand = Character:FindFirstChild("LeftHand")
+
+local RightUpperArm = Character:FindFirstChild("RightUpperArm")
+local RightLowerArm = Character:FindFirstChild("RightLowerArm")
+local RightHand = Character:FindFirstChild("RightHand")
+
+local UpperTorso = Character:FindFirstChild("UpperTorso")
+local LowerTorso = Character:FindFirstChild("LowerTorso")
+
+LowerTorso.Root:Remove()
+UpperTorso.Waist:Remove()
+
+local LeftUpperLeg = Character:FindFirstChild("LeftUpperLeg")
+local LeftLowerLeg = Character:FindFirstChild("LeftLowerLeg")
+local LeftFoot = Character:FindFirstChild("LeftFoot")
+
+local RightUpperLeg = Character:FindFirstChild("RightUpperLeg")
+local RightLowerLeg = Character:FindFirstChild("RightLowerLeg")
+local RightFoot = Character:FindFirstChild("RightFoot")
+
+Align(LeftUpperArm,CloneChar.LeftUpperArm)
+Align(LeftLowerArm,CloneChar.LeftLowerArm)
+Align(LeftHand,CloneChar.LeftHand)
+
+Align(RightUpperArm,CloneChar.RightUpperArm)
+Align(RightLowerArm,CloneChar.RightLowerArm)
+Align(RightHand,CloneChar.RightHand)
+
+Align(LeftUpperLeg,CloneChar.LeftUpperLeg)
+Align(LeftLowerLeg,CloneChar.LeftLowerLeg)
+Align(LeftFoot,CloneChar.LeftFoot)
+
+Align(RightUpperLeg,CloneChar.RightUpperLeg)
+Align(RightLowerLeg,CloneChar.RightLowerLeg)
+Align(RightFoot,CloneChar.RightFoot)
+
+Align(LowerTorso,CloneChar.LowerTorso)
+Align(UpperTorso,CloneChar.UpperTorso)
+
+-- done
+
+--[[Camera]]
+game.Workspace.CurrentCamera.CameraSubject = CloneChar.Humanoid
+
+--[[Anchor]]
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+
+--[[Movement]]
+game.RunService.RenderStepped:Connect(
+    function()
+        if CloneChar:FindFirstChild("HumanoidRootPart") then
+            CloneChar.Humanoid:Move(game.Players.LocalPlayer.Character.Humanoid.MoveDirection, false)
+        end
+    end
+)
+
+--[[Face]]
+CloneChar.Head.face.Transparency = 1
+Character.Animate:Remove()
+--Character["HumanoidRootPart"]:Destroy()
+
+--[[Jump]]
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if CloneChar.Humanoid.FloorMaterial ~= Enum.Material.Air then
+        CloneChar.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        CloneChar:FindFirstChildOfClass('Humanoid').Sit = false
+    end
+end)
+end)
+
+local UIS = game:GetService("UserInputService")
+function dragify(Frame)
+    dragToggle = nil
+    local dragSpeed = 0.30
+    dragInput = nil
+    dragStart = nil
+    local dragPos = nil
+    function updateInput(input)
+        local Delta = input.Position - dragStart
+        local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
+        game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.30), {Position = Position}):Play()
+    end
+    Frame.InputBegan:Connect(function(input)
+        if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
+            dragToggle = true
+            dragStart = input.Position
+            startPos = Frame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragToggle = false
+                end
+            end)
+        end
+    end)
+    Frame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if input == dragInput and dragToggle then
+            updateInput(input)
+        end
+    end)
+end
+
+--dragify(Main)

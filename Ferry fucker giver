@@ -1,0 +1,307 @@
+
+	
+game.Players.LocalPlayer.Character.Head.face:Remove()
+	game.Players.LocalPlayer.Character.Torso.Transparency = 1
+	game.Players.LocalPlayer.Character['Right Arm'].Transparency = 1
+	game.Players.LocalPlayer.Character["Left Arm"].Transparency = 1
+	game.Players.LocalPlayer.Character["Right Leg"].Transparency = 1
+	game.Players.LocalPlayer.Character["Left Leg"].Transparency = 1
+
+	Local = game:GetService('Players').LocalPlayer
+	Char  = Local.Character
+	touched,tpdback = false, false
+	Local.CharacterAdded:connect(function(char)
+		if script.Disabled ~= true then
+			wait(.00001)
+			loc = Char.HumanoidRootPart.Position
+			Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+		end
+	end)
+	box = Instance.new('Part',workspace)
+	box.Anchored = true
+	box.Transparency = 1
+	box.CanCollide = true
+	box.Size = Vector3.new(10,1,10)
+	box.Position = Vector3.new(0,10000,0)
+	box.Touched:connect(function(part)
+		if (part.Parent.Name == Local.Name) then
+			if touched == false then
+				touched = true
+				function apply()
+					if script.Disabled ~= true then
+						no = Char.HumanoidRootPart:Clone()
+						wait(.0001)
+						Char.HumanoidRootPart:Destroy()
+						no.Parent = Char
+						Char:MoveTo(loc)
+						touched = false
+					end end
+				if Char then
+					apply()
+				end
+			end
+		end
+	end)
+	repeat wait() until Char
+	loc = Char.HumanoidRootPart.Position
+	Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+
+	wait(0.5)
+
+	-- The Rest
+	local Player = game.Players.LocalPlayer
+	local Character = Player.Character
+	local Mouse = Player:GetMouse()
+
+	local ClonedHats = {
+		Hat1 = Character:WaitForChild("WalrusAccessory"):Clone(),
+		Hat2 = Character:WaitForChild("Meshes/BeeOnShoulder (1)Accessory"):Clone(),
+
+
+
+	}
+	local RealHats = {
+		Hat1 = Character:WaitForChild("WalrusAccessory"),
+		Hat2 = Character:WaitForChild("Meshes/BeeOnShoulder (1)Accessory"),
+
+
+	}
+
+	local DontRemoveMesh = {
+		"Meshes/BeeOnShoulder (1)Accessory",
+	}
+
+	-- Alings Real Hats to the Cloned Hats
+	local realign = coroutine.create(function()
+		while true do
+			game["Run Service"].Heartbeat:Wait()
+			RealHats.Hat1.Handle.CFrame = ClonedHats.Hat1.Handle.CFrame
+			RealHats.Hat2.Handle.CFrame = ClonedHats.Hat2.Handle.CFrame
+
+
+		end
+	end)
+	coroutine.resume(realign)
+
+	-- Removes Meshes And Welds
+	for i, v in next, ClonedHats do
+		if v then
+			v.Parent = Character
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	for i, v in next, RealHats do
+		if v then
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+	function ftp(str)
+		local pt = {};
+		if str ~= 'me' and str ~= 'random' then
+			for i, v in pairs(game.Players:GetPlayers()) do
+				if v.Name:lower():find(str:lower()) then
+					table.insert(pt, v);
+				end
+			end
+		elseif str == 'me' then
+			table.insert(pt, plr);
+		elseif str == 'random' then
+			table.insert(pt, game.Players:GetPlayers()[math.random(1, #game.Players:GetPlayers())]);
+		end
+		return pt;
+	end
+	local function Align(Hat, Body)
+		local A0 = Instance.new("Attachment", Hat)
+		A0.Position = Vector3.new(0, 0, 0)
+
+		local A1 = Instance.new("Attachment", Body)
+		A1.Position = Vector3.new(0, 0, 0)
+
+		local AlignP = Instance.new("AlignPosition", Hat)
+		AlignP.Attachment0 = A0
+		AlignP.Attachment1 = A1
+		AlignP.RigidityEnabled = false
+		AlignP.ReactionForceEnabled = false
+		AlignP.ApplyAtCenterOfMass = true
+		AlignP.MaxForce = 999999999
+		AlignP.MaxVelocity = math.huge
+		AlignP.Responsiveness = 65
+
+		local AlignO = Instance.new("AlignOrientation", Hat)
+		AlignO.Attachment0 = A0
+		AlignO.Attachment1 = A1
+		AlignO.ReactionTorqueEnabled = true
+		AlignO.PrimaryAxisOnly = false
+		AlignO.MaxTorque = 999999999
+		AlignO.MaxAngularVelocity = math.huge
+		AlignO.Responsiveness = 50
+	end
+	Align(ClonedHats.Hat1.Handle, Character.HumanoidRootPart)
+	Align(ClonedHats.Hat2.Handle, Character.HumanoidRootPart)
+
+
+	Character.HumanoidRootPart:FindFirstChild("Attachment").Name = "Hat1"
+	Character.HumanoidRootPart:FindFirstChild("Attachment").Name = "Hat2"
+
+	local Hat1 = Character.HumanoidRootPart:FindFirstChild("Hat1")
+	local Hat2 = Character.HumanoidRootPart:FindFirstChild("Hat2")
+
+
+
+
+
+
+
+
+
+
+	local IsGiving = false
+	-- Gui to Lua
+	-- Version: 3.2
+
+	-- Instances:
+
+	local ScreenGui = Instance.new("ScreenGui")
+	local Frame = Instance.new("Frame")
+	local UICorner = Instance.new("UICorner")
+	local TextBox = Instance.new("TextBox")
+	local UICorner_2 = Instance.new("UICorner")
+	local Give = Instance.new("TextButton")
+	local UICorner_3 = Instance.new("UICorner")
+	local TextLabel = Instance.new("TextLabel")
+	local Stop = Instance.new("TextButton")
+	local UICorner_4 = Instance.new("UICorner")
+	local Close = Instance.new("TextButton")
+
+	--Properties:
+
+	ScreenGui.Parent =  game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+	Frame.Parent = ScreenGui
+	Frame.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
+	Frame.Position = UDim2.new(0.164275467, 0, 0.489868939, 0)
+	Frame.Size = UDim2.new(0, 228, 0, 121)
+
+	UICorner.Parent = Frame
+
+	TextBox.Parent = Frame
+	TextBox.BackgroundColor3 = Color3.fromRGB(57, 57, 57)
+	TextBox.Position = UDim2.new(0.0512220338, 0, 0.156837642, 0)
+	TextBox.Size = UDim2.new(0, 200, 0, 50)
+	TextBox.Font = Enum.Font.SourceSans
+	TextBox.PlaceholderText = "Plr Name"
+	TextBox.Text = ""
+	TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextSize = 14.000
+
+	UICorner_2.Parent = TextBox
+
+	Give.Name = "Give"
+	Give.Parent = Frame
+	Give.BackgroundColor3 = Color3.fromRGB(57, 57, 57)
+	Give.Position = UDim2.new(0.164017484, 0, 0.653217673, 0)
+	Give.Size = UDim2.new(0, 68, 0, 23)
+	Give.Font = Enum.Font.SourceSans
+	Give.Text = "Give"
+	Give.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Give.TextSize = 14.000
+
+	UICorner_3.Parent = Give
+
+	TextLabel.Parent = Frame
+	TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel.BackgroundTransparency = 1.000
+	TextLabel.BorderSizePixel = 0
+	TextLabel.Position = UDim2.new(0.186469629, 0, 0.0187945403, 0)
+	TextLabel.Size = UDim2.new(0, 138, 0, 19)
+	TextLabel.Font = Enum.Font.SourceSans
+	TextLabel.Text = "Fairy Giver"
+	TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel.TextSize = 14.000
+
+	Stop.Name = "Stop"
+	Stop.Parent = Frame
+	Stop.BackgroundColor3 = Color3.fromRGB(57, 57, 57)
+	Stop.Position = UDim2.new(0.528052568, 0, 0.653217673, 0)
+	Stop.Size = UDim2.new(0, 68, 0, 23)
+	Stop.Font = Enum.Font.SourceSans
+	Stop.Text = "Stop"
+	Stop.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Stop.TextSize = 14.000
+
+	UICorner_4.Parent = Stop
+
+	Close.Name = "Close"
+	Close.Parent = Frame
+	Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Close.BackgroundTransparency = 1.000
+	Close.Position = UDim2.new(0.906519473, 0, -0.00599887967, 0)
+	Close.Size = UDim2.new(0, 21, 0, 22)
+	Close.Font = Enum.Font.SourceSans
+	Close.Text = "X"
+	Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Close.TextSize = 14.000
+
+	local function YXKD_fake_script() -- Frame.d=drag 
+		local script = Instance.new('LocalScript', Frame)
+
+		local a=game:GetService("UserInputService")function drag(b)dragToggle=nil dragSpeed=0.23 dragInput=nil dragStart=nil dragPos=nil function updateInput(a)Delta=a.Position-dragStart Position=UDim2.new(startPos.X.Scale,startPos.X.Offset+Delta.X,startPos.Y.Scale,startPos.Y.Offset+Delta.Y)game:GetService("TweenService"):Create(b,TweenInfo.new(0.25),{Position=Position}):Play()end b.InputBegan:Connect(function(c)if(c.UserInputType==Enum.UserInputType.MouseButton1 or c.UserInputType==Enum.UserInputType.Touch)and a:GetFocusedTextBox()==nil then dragToggle=true dragStart=c.Position startPos=b.Position c.Changed:Connect(function()if c.UserInputState==Enum.UserInputState.End then dragToggle=false end end)end end)b.InputChanged:Connect(function(a)if a.UserInputType==Enum.UserInputType.MouseMovement or a.UserInputType==Enum.UserInputType.Touch then dragInput=a end end)game:GetService("UserInputService").InputChanged:Connect(function(a)if a==dragInput and dragToggle then updateInput(a)end end)end drag(script.Parent)
+	end
+	coroutine.wrap(YXKD_fake_script)()
+	--//=================================\\
+	--|| 	       𝙁𝙐𝙉𝘾𝙏𝙄𝙊𝙉𝙎
+	--\\=================================//
+
+	Give.MouseButton1Click:Connect(function()
+		if workspace:FindFirstChild(TextBox.Text).Humanoid then
+			IsGiving = true
+			while wait() do
+				if IsGiving == false then return end    
+				if IsGiving == true then
+					if IsGiving == false then return end
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:FindFirstChild(TextBox.Text).HumanoidRootPart.CFrame + workspace:FindFirstChild(TextBox.Text).HumanoidRootPart.CFrame.LookVector * 2
+				end
+			end
+		else
+			TextBox.Text = "Make sure to put the exact username"
+		end
+	end)
+	Stop.MouseButton1Click:Connect(function()
+		IsGiving = false
+	end)
+	Close.MouseButton1Click:Connect(function()
+		IsGiving = false
+		ScreenGui:Destroy()
+		game.Players.LocalPlayer.Character:Destroy()
+	end)
+	local poo = coroutine.create(function()
+		while true do
+			Hat2.Orientation = Vector3.new(90, 180, 0)
+			wait(0.1)
+			Hat2.Position = Vector3.new(0, -0.7, -0.1)
+			wait(0.1)
+			Hat2.Position = Vector3.new(0, -0.7, -0.9)
+			wait(0.1)
+			Hat1.Orientation = Vector3.new(0, 90, 0)
+			wait(0.1)
+			Hat1.Position = Vector3.new(0, -1, 1)
+		end
+	end)
+	coroutine.resume(poo)

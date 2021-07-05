@@ -1,0 +1,970 @@
+
+	local unanchoredparts = {}
+	local movers = {}
+	local tog = true
+	local move = false
+	local Player = game:GetService("Players").LocalPlayer
+	local Character = Player.Character
+	local mov = {};
+	local mov2 = {};
+
+	local x = -0.011   --Edit Position for head n +left and -Right
+	local y = -0.587   --Edit Position for head up and down
+	local z = -3.234 --Edit Position for head x3
+
+	local Hats = {
+		knife   = Character:WaitForChild("YandereKnife"):Clone(),
+		blood = Character:WaitForChild("MeshPartAccessory"):Clone(),
+		doghead = Character:WaitForChild("Sly Dog"):Clone(),
+		dogtorso = Character:WaitForChild("RedBeanieWithHair"):Clone(),
+		dogflleg = Character:WaitForChild("Pink Hair"):Clone(),
+		dogfrleg = Character:WaitForChild("Pal Hair"):Clone(),
+		dogblleg = Character:WaitForChild("Necklace"):Clone(),
+		dogblreg = Character:WaitForChild("LavanderHair"):Clone(),
+		playerleftarm = Character:WaitForChild("Kate Hair"):Clone(),
+		playerrighttarm = Character:WaitForChild("Robloxclassicred"):Clone(),
+	}
+
+	local HatsF = {
+		knife   = Character:WaitForChild("YandereKnife"),
+		blood = Character:WaitForChild("MeshPartAccessory"),
+		doghead = Character:WaitForChild("Sly Dog"),
+		dogtorso = Character:WaitForChild("RedBeanieWithHair"),
+		dogflleg = Character:WaitForChild("Pink Hair"),
+		dogfrleg = Character:WaitForChild("Pal Hair"),
+		dogblleg = Character:WaitForChild("Necklace"),
+		dogblreg = Character:WaitForChild("LavanderHair"),
+		playerleftarm = Character:WaitForChild("Kate Hair"),
+		playerrighttarm = Character:WaitForChild("Robloxclassicred"),
+	}
+
+	--Dont touch below
+
+	local realign = coroutine.create(function()
+		while true do
+			game["Run Service"].Heartbeat:Wait()
+			HatsF.knife.Handle.CFrame = Hats.knife.Handle.CFrame
+			HatsF.blood.Handle.CFrame = Hats.blood.Handle.CFrame
+			HatsF.doghead.Handle.CFrame = Hats.doghead.Handle.CFrame
+			HatsF.dogtorso.Handle.CFrame = Hats.dogtorso.Handle.CFrame
+			HatsF.dogflleg.Handle.CFrame = Hats.dogflleg.Handle.CFrame
+			HatsF.dogfrleg.Handle.CFrame = Hats.dogfrleg.Handle.CFrame
+			HatsF.dogblleg.Handle.CFrame = Hats.dogblleg.Handle.CFrame
+			HatsF.dogblreg.Handle.CFrame = Hats.dogblreg.Handle.CFrame
+			HatsF.playerleftarm.Handle.CFrame = Hats.playerleftarm.Handle.CFrame
+			HatsF.playerrighttarm.Handle.CFrame = Hats.playerrighttarm.Handle.CFrame
+		end
+	end)
+	coroutine.resume(realign)
+
+	for i,v in next, Hats do
+		v.Handle.AccessoryWeld:Remove()
+		v.Parent = Character
+		v.Handle.Transparency = 1
+		for _,mesh in next, v:GetDescendants() do
+			if mesh:IsA("Mesh") or mesh:IsA("SpecialMesh") then
+				if mesh.Parent.Parent.Name == "MeshPartAccessory" or mesh.Parent.Parent.Name == "Sly Dog" or mesh.Parent.Parent.Name == "YandereKnife" then
+
+				else 
+					mesh:Destroy()
+				end
+			end
+		end
+	end
+	for i,v in next, HatsF do
+		v.Handle.AccessoryWeld:Remove()
+		for _,mesh in next, v:GetDescendants() do
+			if mesh:IsA("Mesh") or mesh:IsA("SpecialMesh") then
+				if mesh.Parent.Parent.Name == "MeshPartAccessory" or mesh.Parent.Parent.Name == "Sly Dog" or mesh.Parent.Parent.Name == "YandereKnife" then
+
+				else 
+					mesh:Destroy()
+				end
+			end
+		end
+	end
+
+	local function align(i,v)
+		local att0 = Instance.new("Attachment", i)
+		att0.Position = Vector3.new(0,0,0)
+		local att1 = Instance.new("Attachment", v)
+		att1.Position = Vector3.new(0,0,0)
+		local AP = Instance.new("AlignPosition", i)
+		AP.Attachment0 = att0
+		AP.Attachment1 = att1
+		AP.RigidityEnabled = false
+		AP.ReactionForceEnabled = false
+		AP.ApplyAtCenterOfMass = true
+		AP.MaxForce = 9999999
+		AP.MaxVelocity = math.huge
+		AP.Responsiveness = 65
+		local AO = Instance.new("AlignOrientation", i)
+		AO.Attachment0 = att0
+		AO.Attachment1 = att1
+		AO.ReactionTorqueEnabled = true
+		AO.PrimaryAxisOnly = false
+		AO.MaxTorque = 9999999
+		AO.MaxAngularVelocity = math.huge
+		AO.Responsiveness = 50
+	end
+
+	--Dont touch above
+
+	--//=================================\\
+	--|| 	 𝘼𝙏𝙏𝘼𝘾𝙃𝙈𝙀𝙉𝙏 𝘾𝙊𝙍𝙍𝙀𝘾𝙏𝙄𝙊𝙉𝙎
+	--\\=================================//
+
+	align(Hats.knife.Handle, Character["HumanoidRootPart"])
+	align(Hats.blood.Handle, Character["HumanoidRootPart"])
+	align(Hats.doghead.Handle, Character["HumanoidRootPart"])
+	align(Hats.dogtorso.Handle, Character["HumanoidRootPart"])
+	align(Hats.dogflleg.Handle, Character["HumanoidRootPart"])
+	align(Hats.dogfrleg.Handle, Character["HumanoidRootPart"])
+	align(Hats.dogblleg.Handle, Character["HumanoidRootPart"])
+	align(Hats.dogblreg.Handle, Character["HumanoidRootPart"])
+	align(Hats.playerleftarm.Handle, Character["Torso"])
+	align(Hats.playerrighttarm.Handle, Character["Torso"])
+
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "Knife"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "Blood"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "DogHead"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "DogTorso"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "dFLLeg"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "dFRLeg"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "dBLLeg"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "dBRLeg"
+	Character:WaitForChild("Torso"):FindFirstChild("Attachment").Name = "pLeftArm"
+	Character:WaitForChild("Torso"):FindFirstChild("Attachment").Name = "pRightArm"
+
+	local Knife = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Knife")
+	local Blood = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Blood")
+	local DogHead = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("DogHead")
+	local DogTorso = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("DogTorso")
+	local dFLLeg = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("dFLLeg")
+	local dFRLeg = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("dFRLeg")
+	local dBLLeg = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("dBLLeg")
+	local dBRLeg = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("dBRLeg")
+	local pLeftArm = Character:WaitForChild("Torso"):FindFirstChild("pLeftArm")
+	local pRightArm = Character:WaitForChild("Torso"):FindFirstChild("pRightArm")
+
+	if game.Players.LocalPlayer.Character:FindFirstChild("Right Arm") then
+		game.Players.LocalPlayer.Character:FindFirstChild("Right Arm"):BreakJoints()
+		game.Players.LocalPlayer.Character:FindFirstChild("Left Arm"):BreakJoints()
+		if game.Players.LocalPlayer.Character:FindFirstChild("Right ArmJoint") then
+			game.Players.LocalPlayer.Character:FindFirstChild("Right ArmJoint"):Destroy()
+			game.Players.LocalPlayer.Character:FindFirstChild("Left ArmJoint"):Destroy()
+		else
+
+		end
+	end
+
+	--//=================================\\
+	--|| 	         𝙇𝙊𝘾𝘼𝙇𝙎
+	--\\=================================//
+
+	local QuickFix = .1
+	local m = game.Players.LocalPlayer:GetMouse()
+	local UIS = game:GetService("UserInputService")
+
+	local dWalkingW = false
+	local dWalkingA = false
+	local dWalkingS = false
+	local dWalkingD = false
+	local walking1 = false
+
+	local NormalMode = true
+	local WeirdMode = false
+	local BrutalMode = false
+
+	local Standing = false
+
+	local Stabbing = false
+
+	--//=================================\\
+	--|| 	          𝙂𝙐𝙄
+	--\\=================================//
+
+	wait(QuickFix)
+
+	local HumanPet = Instance.new("ScreenGui")
+	local Frame = Instance.new("Frame")
+	local Frame_2 = Instance.new("Frame")
+	local TextLabel = Instance.new("TextLabel")
+	local CircleFrame = Instance.new("ScrollingFrame")
+	local Circle = Instance.new("Frame")
+	local UICorner = Instance.new("UICorner")
+
+	HumanPet.Name = "HumanPet"
+	HumanPet.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	HumanPet.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	Frame.Parent = HumanPet
+	Frame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+	Frame.BorderSizePixel = 0
+	Frame.Position = UDim2.new(0.426999986, 0, 0.89200002, 0)
+	Frame.Size = UDim2.new(0.144999996, 0, 0.0700000003, 0)
+
+	Frame_2.Parent = Frame
+	Frame_2.BackgroundColor3 = Color3.fromRGB(255, 80, 147)
+	Frame_2.BorderSizePixel = 0
+	Frame_2.Size = UDim2.new(1, 0, 0.0599999987, 0)
+
+	TextLabel.Parent = Frame
+	TextLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+	TextLabel.BackgroundTransparency = 1.000
+	TextLabel.BorderSizePixel = 0
+	TextLabel.Position = UDim2.new(0.135492176, 0, 0.243968576, 0)
+	TextLabel.Size = UDim2.new(0.729015648, 0, 0.501221061, 0)
+	TextLabel.Font = Enum.Font.SourceSansBold
+	TextLabel.Text = "Mode: Normal"
+	TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel.TextScaled = true
+	TextLabel.TextSize = 20.000
+	TextLabel.TextWrapped = true
+
+	CircleFrame.Name = "CircleFrame"
+	CircleFrame.Parent = Frame
+	CircleFrame.Active = true
+	CircleFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	CircleFrame.BackgroundTransparency = 1.000
+	CircleFrame.BorderSizePixel = 0
+	CircleFrame.Position = UDim2.new(0, 0, 0.0600002557, 0)
+	CircleFrame.Size = UDim2.new(0.995867491, 0, 0.86744374, 0)
+	CircleFrame.ScrollBarThickness = 0
+
+	Circle.Name = "Circle"
+	Circle.Parent = CircleFrame
+	Circle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Circle.BackgroundTransparency = 0.700
+	Circle.Position = UDim2.new(0.401353776, 0, 0.0103071332, 0)
+	Circle.Size = UDim2.new(0.203999996, 0, 0.400000006, 0)
+	Circle.Visible = false
+
+	UICorner.CornerRadius = UDim.new(1, 8)
+	UICorner.Parent = Circle
+
+	--//=================================\\
+	--|| 	       𝙁𝙐𝙉𝘾𝙏𝙄𝙊𝙉𝙎
+	--\\=================================//
+
+--[[
+
+Blood.Orientation = Vector3.new()
+Blood.Position = Vector3.new()
+DogHead.Orientation = Vector3.new()
+DogHead.Position = Vector3.new()
+DogTorso.Orientation = Vector3.new()
+DogTorso.Position = Vector3.new()
+Knife.Orientation = Vector3.new()
+Knife.Position = Vector3.new()
+dBLLeg.Orientation = Vector3.new()
+dBLLeg.Position = Vector3.new()
+dBRLeg.Orientation = Vector3.new()
+dBRLeg.Position = Vector3.new()
+dFLLeg.Orientation = Vector3.new()
+dFLLeg.Position = Vector3.new()
+dFRLeg.Orientation = Vector3.new()
+dFRLeg.Position = Vector3.new()
+pLeftArm.Orientation = Vector3.new()
+pLeftArm.Position = Vector3.new()
+pRightArm.Orientation = Vector3.new()
+pRightArm.Position = Vector3.new()
+
+]]--
+
+	local function startPos()
+		Blood.Orientation = Vector3.new(-90, -0, 0)
+		Blood.Position = Vector3.new(0.053, -0, -0)
+		DogHead.Orientation = Vector3.new(0, 0, 0)
+		DogHead.Position = Vector3.new(3.151, -0.22, -1.898)
+		DogTorso.Orientation = Vector3.new(-43.525, 0, -0)
+		DogTorso.Position = Vector3.new(3.241, -1.348, -0.04)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(0, -21.781, 0)
+		dBLLeg.Position = Vector3.new(4.12, -2.607, 0.109)
+		dBRLeg.Orientation = Vector3.new(-0, 26.425, 0)
+		dBRLeg.Position = Vector3.new(2.372, -2.607, 0.077)
+		dFLLeg.Orientation = Vector3.new(-79.604, 0, -0)
+		dFLLeg.Position = Vector3.new(3.929, -2.082, -0.607)
+		dFRLeg.Orientation = Vector3.new(-79.604, 0, -0)
+		dFRLeg.Position = Vector3.new(2.609, -2.082, -0.607)
+		pLeftArm.Orientation = Vector3.new(-90, 0, 0)
+		pLeftArm.Position = Vector3.new(-1.479, -0.029, 0)
+		pRightArm.Orientation = Vector3.new(-90, -0, 0)
+		pRightArm.Position = Vector3.new(1.487, -0.029, 0)
+	end
+
+	local function StandingF()
+		DogHead.Orientation = Vector3.new(8.831, 0, -0)
+		DogHead.Position = Vector3.new(3.256, -0.631, -2.319)
+		DogTorso.Orientation = Vector3.new(-89.649, 0, -0)
+		DogTorso.Position = Vector3.new(3.241, -0.718, -0.27)
+		dBLLeg.Orientation = Vector3.new(-89.257, -0, 0)
+		dBLLeg.Position = Vector3.new(3.905, -2.033, 0.598)
+		dBRLeg.Orientation = Vector3.new(-89.257, 0, -0)
+		dBRLeg.Position = Vector3.new(2.607, -2.033, 0.598)
+		dFLLeg.Orientation = Vector3.new(-89.257, 0, -0)
+		dFLLeg.Position = Vector3.new(3.929, -2.202, -0.973)
+		dFRLeg.Orientation = Vector3.new(-89.257, 0, -0)
+		dFRLeg.Position = Vector3.new(2.609, -2.202, -0.973)
+	end
+
+	local function WalkingPos1()
+		DogHead.Orientation = Vector3.new(8.831, 0, -0)
+		DogHead.Position = Vector3.new(3.256, -0.631, -2.319)
+		DogTorso.Orientation = Vector3.new(-89.649, 0, -0)
+		DogTorso.Position = Vector3.new(3.241, -0.718, -0.27)
+		dBLLeg.Orientation = Vector3.new(-64.214, 180, -180)
+		dBLLeg.Position = Vector3.new(3.905, -2.1, 1.111)
+		dBRLeg.Orientation = Vector3.new(-57.979, 0, -0)
+		dBRLeg.Position = Vector3.new(2.906, -2.09, 0.285)
+		dFLLeg.Orientation = Vector3.new(-57.01, 0, 0)
+		dFLLeg.Position = Vector3.new(3.929, -2.139, -1.604)
+		dFRLeg.Orientation = Vector3.new(-48.451, -180, -180)
+		dFRLeg.Position = Vector3.new(2.609, -2.047, -0.798)
+	end
+
+	local function WalkingPos2()
+		DogHead.Orientation = Vector3.new(8.831, 0, -0)
+		DogHead.Position = Vector3.new(3.256, -0.631, -2.319)
+		DogTorso.Orientation = Vector3.new(-89.649, 0, -0)
+		DogTorso.Position = Vector3.new(3.241, -0.718, -0.27)
+		dBLLeg.Orientation = Vector3.new(-57.979, -0, 0)
+		dBLLeg.Position = Vector3.new(3.673, -2.09, 0.285)
+		dBRLeg.Orientation = Vector3.new(-56.613, 180, -180)
+		dBRLeg.Position = Vector3.new(2.635, -2.164, 1.124)
+		dFLLeg.Orientation = Vector3.new(-62.015, -180, -180)
+		dFLLeg.Position = Vector3.new(3.929, -2.18, -0.596)
+		dFRLeg.Orientation = Vector3.new(-61.816, 0, -0)
+		dFRLeg.Position = Vector3.new(2.609, -2.138, -2.056)
+	end
+
+	local function Holding()
+		Blood.Orientation = Vector3.new(-90, -89.208, 0)
+		Blood.Position = Vector3.new(-0.989, -0, -1.968)
+		DogHead.Orientation = Vector3.new(-20.692, 0, -0)
+		DogHead.Position = Vector3.new(-1.546, 1.868, -2.706)
+		DogTorso.Orientation = Vector3.new(-0.711, 0, -0)
+		DogTorso.Position = Vector3.new(-1.456, 0.272, -1.933)
+		Knife.Orientation = Vector3.new(-59.74, 2.946, 90.489)
+		Knife.Position = Vector3.new(1.444, -0.714, -1.404)
+		dBLLeg.Orientation = Vector3.new(-87.119, -56.981, 54.771)
+		dBLLeg.Position = Vector3.new(-1.072, -1.578, -1.92)
+		dBRLeg.Orientation = Vector3.new(-88.165, -12.551, 8.456)
+		dBRLeg.Position = Vector3.new(-1.716, -1.642, -1.926)
+		dFLLeg.Orientation = Vector3.new(-83.227, 0, -0)
+		dFLLeg.Position = Vector3.new(-0.41, -0.1, -2.635)
+		dFRLeg.Orientation = Vector3.new(-83.227, -0, 0)
+		dFRLeg.Position = Vector3.new(-2.365, -0.1, -2.635)
+		pLeftArm.Orientation = Vector3.new(28.758, -0, -0)
+		pLeftArm.Position = Vector3.new(-1.479, 1.114, -1.049)
+		pRightArm.Orientation = Vector3.new(-68.604, 0, 0)
+		pRightArm.Position = Vector3.new(1.487, -0.186, -0.288)
+	end
+
+	local function Stab()
+		Blood.Orientation = Vector3.new(-90, -89.208, 0)
+		Blood.Position = Vector3.new(-0.989, -0, -1.968)
+		DogHead.Orientation = Vector3.new(22.262, 0, -0)
+		DogHead.Position = Vector3.new(-1.546, 2.245, -2.566)
+		DogTorso.Orientation = Vector3.new(-0.711, 0, -0)
+		DogTorso.Position = Vector3.new(-1.456, 0.272, -1.933)
+		Knife.Orientation = Vector3.new(-25.802, 1.906, 176.903)
+		Knife.Position = Vector3.new(-0.603, 0.159, -1.76)
+		dBLLeg.Orientation = Vector3.new(-71.293, -7.55, 4.979)
+		dBLLeg.Position = Vector3.new(-1.072, -1.379, -2.58)
+		dBRLeg.Orientation = Vector3.new(-71.22, -1.238, -2.916)
+		dBRLeg.Position = Vector3.new(-1.716, -1.439, -2.604)
+		dFLLeg.Orientation = Vector3.new(-22.126, 0, -0)
+		dFLLeg.Position = Vector3.new(-0.41, 0.678, -3.008)
+		dFRLeg.Orientation = Vector3.new(-22.126, 0, -0)
+		dFRLeg.Position = Vector3.new(-2.365, 0.679, -3.008)
+		pLeftArm.Orientation = Vector3.new(28.758, -0, -0)
+		pLeftArm.Position = Vector3.new(-1.479, 1.114, -1.049)
+		pRightArm.Orientation = Vector3.new(-20.705, 29.896, 72.193)
+		pRightArm.Position = Vector3.new(0.566, 0.128, -1.007)
+	end
+
+	local function Choke1()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(6.983, -0, -0)
+		DogHead.Position = Vector3.new(0.11, 1.623, -1.433)
+		DogTorso.Orientation = Vector3.new(-0.711, -0, -0)
+		DogTorso.Position = Vector3.new(0.2, 0.007, -0.494)
+		Knife.Orientation = Vector3.new(-43.876, 180, 180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-51.191, -42.353, 39.559)
+		dBLLeg.Position = Vector3.new(0.893, -2.037, -1.012)
+		dBRLeg.Orientation = Vector3.new(-55.485, 37.837, -30.62)
+		dBRLeg.Position = Vector3.new(-0.588, -2.237, -1.007)
+		dFLLeg.Orientation = Vector3.new(-50.841, 0, -0)
+		dFLLeg.Position = Vector3.new(1.246, -0.143, -1.868)
+		dFRLeg.Orientation = Vector3.new(-50.841, 0, 0)
+		dFRLeg.Position = Vector3.new(-0.805, -0.207, -1.812)
+		pLeftArm.Orientation = Vector3.new(-0.618, -58.303, 20.391)
+		pLeftArm.Position = Vector3.new(-0.07, 0.434, -0.7)
+		pRightArm.Orientation = Vector3.new(73.783, -134.621, -177.144)
+		pRightArm.Position = Vector3.new(1.151, 1.306, -0.399)
+	end
+
+	local function Choke2()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(-20.692, -0, -0)
+		DogHead.Position = Vector3.new(0.11, 1.603, -1.267)
+		DogTorso.Orientation = Vector3.new(-0.711, -0, -0)
+		DogTorso.Position = Vector3.new(0.2, 0.007, -0.494)
+		Knife.Orientation = Vector3.new(-43.876, 180, 180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-59.854, -62.053, 70.212)
+		dBLLeg.Position = Vector3.new(0.879, -2.006, -1.125)
+		dBRLeg.Orientation = Vector3.new(-70.24, 68.884, -58.612)
+		dBRLeg.Position = Vector3.new(-0.574, -2.268, -0.893)
+		dFLLeg.Orientation = Vector3.new(-83.227, 0, -0)
+		dFLLeg.Position = Vector3.new(1.246, -0.365, -1.196)
+		dFRLeg.Orientation = Vector3.new(-83.227, 0, -0)
+		dFRLeg.Position = Vector3.new(-0.709, -0.365, -1.196)
+		pLeftArm.Orientation = Vector3.new(-0.618, -58.303, 20.391)
+		pLeftArm.Position = Vector3.new(-0.229, 0.322, -0.955)
+		pRightArm.Orientation = Vector3.new(88.957, -7.197, -49.839)
+		pRightArm.Position = Vector3.new(1.036, 1.183, -0.522)
+	end
+
+	wait()
+
+	local function Punch1()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(7.36, 178.36, -2.887)
+		DogHead.Position = Vector3.new(0.336, 1.883, -1.939)
+		DogTorso.Orientation = Vector3.new(-7.833, 179.125, -2.89)
+		DogTorso.Position = Vector3.new(0.354, -0.05, -2.468)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-65.847, 92.516, 88.995)
+		dBLLeg.Position = Vector3.new(-0.516, -2.104, -2.338)
+		dBRLeg.Orientation = Vector3.new(-68.752, -91.904, -88.29)
+		dBRLeg.Position = Vector3.new(0.971, -2.253, -2.382)
+		dFLLeg.Orientation = Vector3.new(-87.115, -84.124, -97.136)
+		dFLLeg.Position = Vector3.new(-0.674, -0.485, -2.373)
+		dFRLeg.Orientation = Vector3.new(-87.115, -84.124, -97.136)
+		dFRLeg.Position = Vector3.new(1.279, -0.387, -2.33)
+		pLeftArm.Orientation = Vector3.new(15.273, -9.556, 4.386)
+		pLeftArm.Position = Vector3.new(-0.563, 0.589, -1.323)
+		pRightArm.Orientation = Vector3.new(27.228, -5.022, -0.045)
+		pRightArm.Position = Vector3.new(0.989, 0.497, 0.012)
+
+	end
+
+	wait()
+
+	local function Punch2()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(28.861, 177.151, -3.269)
+		DogHead.Position = Vector3.new(0.33, 2.047, -2.029)
+		DogTorso.Orientation = Vector3.new(-7.833, 179.125, -2.89)
+		DogTorso.Position = Vector3.new(0.354, -0.05, -2.468)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-65.847, 92.516, 88.995)
+		dBLLeg.Position = Vector3.new(-0.516, -2.104, -2.338)
+		dBRLeg.Orientation = Vector3.new(-68.752, -91.904, -88.29)
+		dBRLeg.Position = Vector3.new(0.971, -2.253, -2.382)
+		dFLLeg.Orientation = Vector3.new(-87.115, -84.124, -97.136)
+		dFLLeg.Position = Vector3.new(-0.674, -0.485, -2.373)
+		dFRLeg.Orientation = Vector3.new(-87.115, -84.124, -97.136)
+		dFRLeg.Position = Vector3.new(1.279, -0.387, -2.33)
+		pLeftArm.Orientation = Vector3.new(15.273, -9.556, 4.386)
+		pLeftArm.Position = Vector3.new(-0.563, 0.589, -1.323)
+		pRightArm.Orientation = Vector3.new(27.228, -5.022, -0.045)
+		pRightArm.Position = Vector3.new(1.078, 1.021, -1.003)
+	end
+
+	wait()
+
+	local function Punch3()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(22.611, 142.529, -18.706)
+		DogHead.Position = Vector3.new(-0.079, 1.901, -2.266)
+		DogTorso.Orientation = Vector3.new(-7.833, 179.125, -2.89)
+		DogTorso.Position = Vector3.new(0.354, -0.05, -2.468)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-65.847, 92.516, 88.995)
+		dBLLeg.Position = Vector3.new(-0.516, -2.104, -2.338)
+		dBRLeg.Orientation = Vector3.new(-68.752, -91.904, -88.29)
+		dBRLeg.Position = Vector3.new(0.971, -2.253, -2.382)
+		dFLLeg.Orientation = Vector3.new(-87.115, -84.124, -97.136)
+		dFLLeg.Position = Vector3.new(-0.674, -0.485, -2.373)
+		dFRLeg.Orientation = Vector3.new(-87.115, -84.124, -97.136)
+		dFRLeg.Position = Vector3.new(1.279, -0.387, -2.33)
+		pLeftArm.Orientation = Vector3.new(15.273, -9.556, 4.386)
+		pLeftArm.Position = Vector3.new(-0.563, 0.589, -1.323)
+		pRightArm.Orientation = Vector3.new(19.488, 41.622, 19.398)
+		pRightArm.Position = Vector3.new(0.961, 1.084, -1.135)
+	end
+
+	wait()
+
+	local function SlitHold()
+		Blood.Orientation = Vector3.new(-55.847, -180, -180)
+		Blood.Position = Vector3.new(0.199, 0.884, -0.955)
+		DogHead.Orientation = Vector3.new(5.645, 1.226, -0.785)
+		DogHead.Position = Vector3.new(0.169, 1.784, -1.563)
+		DogTorso.Orientation = Vector3.new(-9.566, 1.436, -0.792)
+		DogTorso.Position = Vector3.new(0.247, -0.132, -0.978)
+		Knife.Orientation = Vector3.new(-1.259, -180, -180)
+		Knife.Position = Vector3.new(0.462, 0.498, -1.921)
+		dBLLeg.Orientation = Vector3.new(-63.822, -88.67, 93.208)
+		dBLLeg.Position = Vector3.new(1.185, -2.156, -1.088)
+		dBRLeg.Orientation = Vector3.new(-70.78, 95.578, -93.462)
+		dBRLeg.Position = Vector3.new(-0.292, -2.357, -0.97)
+		dFLLeg.Orientation = Vector3.new(-87.776, 160.774, -159.456)
+		dFLLeg.Position = Vector3.new(1.285, -0.532, -1.107)
+		dFRLeg.Orientation = Vector3.new(-87.776, 160.774, -159.456)
+		dFRLeg.Position = Vector3.new(-0.67, -0.506, -1.063)
+		pLeftArm.Orientation = Vector3.new(4.103, -34.783, 2.797)
+		pLeftArm.Position = Vector3.new(-0.563, 0.589, -1.323)
+		pRightArm.Orientation = Vector3.new(0.469, -5.002, -0.04)
+		pRightArm.Position = Vector3.new(1.063, 0.504, -0.83)
+	end
+
+	wait()
+
+	local function Slitting()
+		Blood.Orientation = Vector3.new(8.121, -180, 180)
+		Blood.Position = Vector3.new(0.199, -2.844, -3.86)
+		DogHead.Orientation = Vector3.new(34.399, 0.769, -0.946)
+		DogHead.Position = Vector3.new(0.172, 1.888, -1.492)
+		DogTorso.Orientation = Vector3.new(-9.566, 1.436, -0.792)
+		DogTorso.Position = Vector3.new(0.247, -0.132, -0.978)
+		Knife.Orientation = Vector3.new(1.599, -168.151, 179.111)
+		Knife.Position = Vector3.new(-0.893, 0.403, -1.959)
+		dBLLeg.Orientation = Vector3.new(-63.822, -88.67, 93.208)
+		dBLLeg.Position = Vector3.new(1.185, -2.156, -1.088)
+		dBRLeg.Orientation = Vector3.new(-70.78, 95.578, -93.462)
+		dBRLeg.Position = Vector3.new(-0.292, -2.357, -0.97)
+		dFLLeg.Orientation = Vector3.new(-87.776, 160.774, -159.456)
+		dFLLeg.Position = Vector3.new(1.285, -0.532, -1.107)
+		dFRLeg.Orientation = Vector3.new(-87.776, 160.774, -159.456)
+		dFRLeg.Position = Vector3.new(-0.67, -0.506, -1.063)
+		pLeftArm.Orientation = Vector3.new(1.48, 11.243, 4.422)
+		pLeftArm.Position = Vector3.new(-1.454, 0.519, -0.977)
+		pRightArm.Orientation = Vector3.new(0.469, -5.002, -0.04)
+		pRightArm.Position = Vector3.new(1.063, 0.504, -0.83)
+	end
+
+	wait()
+
+	local function f1()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(-28.947, 0, 0)
+		DogHead.Position = Vector3.new(-0.064, -2.013, -4.394)
+		DogTorso.Orientation = Vector3.new(-88.937, -179.998, 179.998)
+		DogTorso.Position = Vector3.new(0.026, -1.378, -1.958)
+		Knife.Orientation = Vector3.new(-43.876, 180, 180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-43.241, -30.621, 22.072)
+		dBLLeg.Position = Vector3.new(0.905, -2.118, -0.929)
+		dBRLeg.Orientation = Vector3.new(-41.35, 36.357, -25.934)
+		dBRLeg.Position = Vector3.new(-0.843, -2.141, -0.951)
+		dFLLeg.Orientation = Vector3.new(-72.794, -0, 0)
+		dFLLeg.Position = Vector3.new(1.069, -2.134, -3.059)
+		dFRLeg.Orientation = Vector3.new(-72.794, -0, 0)
+		dFRLeg.Position = Vector3.new(-1.087, -2.134, -3.059)
+		pLeftArm.Orientation = Vector3.new(-59.189, -0, 0)
+		pLeftArm.Position = Vector3.new(-1.479, -0.336, -0.433)
+		pRightArm.Orientation = Vector3.new(-59.189, -0, 0)
+		pRightArm.Position = Vector3.new(1.487, -0.336, -0.433)
+	end
+
+	wait()
+
+	local function f2()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(-10.276, 0, 20.76)
+		DogHead.Position = Vector3.new(-0.064, -2.284, -4.9)
+		DogTorso.Orientation = Vector3.new(-88.937, -179.998, 179.998)
+		DogTorso.Position = Vector3.new(0.026, -1.649, -2.465)
+		Knife.Orientation = Vector3.new(-43.876, 180, 180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-57.657, -106.273, 107.391)
+		dBLLeg.Position = Vector3.new(0.877, -2.158, -0.914)
+		dBRLeg.Orientation = Vector3.new(-70.68, 116.067, -118.901)
+		dBRLeg.Position = Vector3.new(-0.843, -2.47, -0.907)
+		dFLLeg.Orientation = Vector3.new(-39.265, -0, 0)
+		dFLLeg.Position = Vector3.new(1.069, -2.387, -3.893)
+		dFRLeg.Orientation = Vector3.new(-39.265, -0, 0)
+		dFRLeg.Position = Vector3.new(-1.087, -2.387, -3.893)
+		pLeftArm.Orientation = Vector3.new(-59.189, -0, 0)
+		pLeftArm.Position = Vector3.new(-1.206, -0.802, -0.711)
+		pRightArm.Orientation = Vector3.new(-59.189, -0, 0)
+		pRightArm.Position = Vector3.new(1.213, -0.802, -0.711)
+	end
+
+	local function tBag()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(8.831, 0, 0)
+		DogHead.Position = Vector3.new(3.697, -1.685, -2.483)
+		DogTorso.Orientation = Vector3.new(-89.649, -0, 0)
+		DogTorso.Position = Vector3.new(3.682, -1.772, -0.434)
+		Knife.Orientation = Vector3.new(-43.876, 180, 180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(-4.815, -89.937, 89.255)
+		dBLLeg.Position = Vector3.new(4.892, -2.6, 0.441)
+		dBRLeg.Orientation = Vector3.new(-9.446, 89.876, -89.247)
+		dBRLeg.Position = Vector3.new(2.598, -2.679, 0.439)
+		dFLLeg.Orientation = Vector3.new(-4.815, -89.937, 89.255)
+		dFLLeg.Position = Vector3.new(5.083, -2.571, -1.128)
+		dFRLeg.Orientation = Vector3.new(-9.446, 89.876, -89.247)
+		dFRLeg.Position = Vector3.new(2.411, -2.691, -1.129)
+		pLeftArm.Orientation = Vector3.new(-90, 0, 0)
+		pLeftArm.Position = Vector3.new(-1.479, -0.029, 0)
+		pRightArm.Orientation = Vector3.new(-90, 0, 0)
+		pRightArm.Position = Vector3.new(1.487, -0.029, 0)
+	end
+
+	local function gauk()
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(1.205, -176.9, 0.065)
+		DogHead.Position = Vector3.new(0.098, -0.908, -1.728)
+		DogTorso.Orientation = Vector3.new(-60.911, -177.019, 0.134)
+		DogTorso.Position = Vector3.new(-0.092, -1.845, -3.55)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(0.515, 162.281, 0.11)
+		dBLLeg.Position = Vector3.new(-1, -2.788, -3.725)
+		dBRLeg.Orientation = Vector3.new(0.261, -149.513, 0.458)
+		dBRLeg.Position = Vector3.new(0.746, -2.796, -3.817)
+		dFLLeg.Orientation = Vector3.new(-1.24, -176.903, 0.065)
+		dFLLeg.Position = Vector3.new(-0.998, -1.761, -0.992)
+		dFRLeg.Orientation = Vector3.new(-1.24, -176.903, 0.065)
+		dFRLeg.Position = Vector3.new(1.155, -1.763, -1.109)
+		pLeftArm.Orientation = Vector3.new(-29.78, -22.182, 11.448)
+		pLeftArm.Position = Vector3.new(-0.971, -0.162, -0.924)
+		pRightArm.Orientation = Vector3.new(-29.953, 21.176, -10.947)
+		pRightArm.Position = Vector3.new(1.054, -0.168, -0.934)
+		wait(.2)
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(1.205, -176.9, 0.065)
+		DogHead.Position = Vector3.new(0.121, -0.899, -1.293)
+		DogTorso.Orientation = Vector3.new(-60.911, -177.019, 0.134)
+		DogTorso.Position = Vector3.new(-0.076, -1.825, -3.254)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(0.515, 162.281, 0.11)
+		dBLLeg.Position = Vector3.new(-1, -2.788, -3.725)
+		dBRLeg.Orientation = Vector3.new(0.261, -149.513, 0.458)
+		dBRLeg.Position = Vector3.new(0.746, -2.796, -3.817)
+		dFLLeg.Orientation = Vector3.new(-1.24, -176.903, 0.065)
+		dFLLeg.Position = Vector3.new(-0.982, -1.767, -0.702)
+		dFRLeg.Orientation = Vector3.new(-1.24, -176.903, 0.065)
+		dFRLeg.Position = Vector3.new(1.171, -1.769, -0.818)
+		pLeftArm.Orientation = Vector3.new(-24.121, -43.569, 21.243)
+		pLeftArm.Position = Vector3.new(-0.841, -0.106, -0.834)
+		pRightArm.Orientation = Vector3.new(-25.361, 39.914, -19.713)
+		pRightArm.Position = Vector3.new(0.878, -0.102, -0.827)
+		wait(.2)
+		Blood.Orientation = Vector3.new(-90, 0, 0)
+		Blood.Position = Vector3.new(0.053, 0, 0)
+		DogHead.Orientation = Vector3.new(1.205, -176.9, 0.065)
+		DogHead.Position = Vector3.new(0.098, -0.908, -1.728)
+		DogTorso.Orientation = Vector3.new(-60.911, -177.019, 0.134)
+		DogTorso.Position = Vector3.new(-0.092, -1.845, -3.55)
+		Knife.Orientation = Vector3.new(-43.876, -180, -180)
+		Knife.Position = Vector3.new(0.053, 0.215, 0.023)
+		dBLLeg.Orientation = Vector3.new(0.515, 162.281, 0.11)
+		dBLLeg.Position = Vector3.new(-1, -2.788, -3.725)
+		dBRLeg.Orientation = Vector3.new(0.261, -149.513, 0.458)
+		dBRLeg.Position = Vector3.new(0.746, -2.796, -3.817)
+		dFLLeg.Orientation = Vector3.new(-1.24, -176.903, 0.065)
+		dFLLeg.Position = Vector3.new(-0.998, -1.761, -0.992)
+		dFRLeg.Orientation = Vector3.new(-1.24, -176.903, 0.065)
+		dFRLeg.Position = Vector3.new(1.155, -1.763, -1.109)
+		pLeftArm.Orientation = Vector3.new(-29.78, -22.182, 11.448)
+		pLeftArm.Position = Vector3.new(-0.971, -0.162, -0.924)
+		pRightArm.Orientation = Vector3.new(-29.953, 21.176, -10.947)
+		pRightArm.Position = Vector3.new(1.054, -0.168, -0.934)
+	end
+
+	startPos()
+
+	--//=================================\\
+	--|| 	       𝙂𝙐𝙄 𝙁𝙐𝙉𝘾𝙏𝙄𝙊𝙉
+	--\\=================================//
+
+	local function CircleTween()
+		Circle.Size = UDim2.new(0.203999996, 0, 0.400000006, 0)
+		Circle.Position = UDim2.new(0.401353776, 0, 0.0103071332, 0)
+		Circle.Visible = true
+		Circle:TweenSize(UDim2.new(1.2, 0,1.2, 0), "In", "Quart", .25)
+		Circle:TweenPosition(UDim2.new(-0.096, 0,-0.388, 0), "In", "Quart", .25)
+		wait(.25)
+		Circle.Visible = false
+		Circle.Size = UDim2.new(0.203999996, 0, 0.400000006, 0)
+		Circle.Position = UDim2.new(0.401353776, 0, 0.0103071332, 0)
+	end
+
+	local function NormalModeF()
+		TextLabel.Text = "Mode: Normal"
+		CircleTween()
+		startPos()
+		NormalMode = true
+		WeirdMode = false
+		BrutalMode = false
+	end
+
+	local function WeirdModeF()
+		TextLabel.Text = "Mode: Weird"
+		CircleTween()
+		startPos()
+		WeirdMode = true
+		NormalMode = false
+		BrutalMode = false
+	end
+
+	local function BrutalModeF()
+		TextLabel.Text = "Mode: Brutal"
+		CircleTween()
+		startPos()
+		BrutalMode = true
+		WeirdMode = false
+		NormalMode = false
+	end
+
+	--//=================================\\
+	--|| 	     𝙈𝙊𝘿𝙀 𝙎𝙒𝙄𝙏𝘾𝙃𝙄𝙉𝙂
+	--\\=================================//
+
+--[[
+
+Keybinds:
+
+B - Normal Mode
+N - Weird Mode
+M - Brutal Mode
+
+]]--
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "b" then
+			if NormalMode == true then
+
+			else
+				NormalModeF()
+			end
+		end
+	end)
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "n" then
+			if WeirdMode == true then
+
+			else
+				WeirdModeF()
+			end
+		end
+	end)
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "m" then
+			if BrutalMode == true then
+
+			else
+				BrutalModeF()
+			end
+		end
+	end)
+
+	--//=================================\\
+	--|| 	   𝙒𝘼𝙇𝙆𝙄𝙉𝙂 𝙈𝙊𝙑𝙀𝙈𝙀𝙉𝙏
+	--\\=================================//
+
+	local walk = coroutine.create(function()
+		while wait(.2) do
+			if walking1 == true then
+				if walking1 == false then startPos() end
+				if WeirdMode or BrutalMode == true then end 
+				WalkingPos1()
+				if walking1 == false then startPos() end
+				wait(.2)
+				if walking1 == false then startPos() end
+				if WeirdMode or BrutalMode == true then end 
+				StandingF()
+				if walking1 == false then startPos() end
+				wait(.2)
+				if walking1 == false then startPos() end
+				if WeirdMode or BrutalMode == true then end 
+				WalkingPos2()
+				if walking1 == false then startPos() end
+			end
+		end
+	end)
+	coroutine.resume(walk)
+
+	Character.Humanoid.Running:Connect(function(h)
+		if h >= 2 then
+			if WeirdMode or BrutalMode == true then return end 
+			walking1 = true
+		else
+			if WeirdMode or BrutalMode == true then return end 
+			startPos()
+			walking1 = false
+		end
+	end)
+
+
+	--//=================================\\
+	--|| 	     𝙆𝙀𝙔𝘽𝙄𝙉𝘿 𝘼𝘾𝙏𝙄𝙊𝙉
+	--\\=================================//
+
+	-- Normal Mode
+
+--[[
+
+E - Stand
+R - TBag
+
+]]--
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "e" then
+			if NormalMode == true then
+				if Standing == false then
+					if WeirdMode or BrutalMode == true then return end
+					Standing = true
+					StandingF()
+				else
+					Standing = false
+					startPos()
+				end
+			end
+		end
+	end)
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "r" then
+			if NormalMode == true then
+				if WeirdMode or BrutalMode == true then return end
+				tBag()
+				wait(.25)
+				StandingF()
+			end
+		end
+	end)
+
+	-- Weird Mode
+
+--[[
+
+E - Fck
+R - Gauk
+
+]]--
+
+	wait()
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "e" then
+			if WeirdMode == true then
+				if NormalMode or BrutalMode == true then return end
+				f2()
+				wait(.2)
+				f1()
+			end
+		end
+	end)
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "r" then
+			if WeirdMode == true then
+				if NormalMode or BrutalMode == true then return end
+				gauk()
+			end
+		end
+	end)
+
+	-- Brutal Mode
+
+--[[
+
+E - Stab
+R - Choke
+Y - Punch
+U - Slit
+
+]]--
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "e" then
+			if BrutalMode == true then
+				if NormalMode or WeirdMode == true then return end
+				Stab()
+				wait(.7)
+				Holding()
+			end
+		end
+	end)
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "r" then
+			if BrutalMode == true then
+				if NormalMode or WeirdMode == true then return end
+				Choke1()
+				wait(.2)
+				Choke2()
+			end
+		end
+	end)
+
+	wait()
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "y" then
+			if BrutalMode == true then
+				if NormalMode or WeirdMode == true then return end
+				Punch1()
+				wait(.1)
+				Punch2()
+				wait(.1)
+				Punch3()
+				wait(.1)
+				Punch1()
+			end
+		end
+	end)
+
+	wait()
+
+	m.KeyDown:connect(function(k)
+		k = k:lower()
+		if k == "u" then
+			if BrutalMode == true then
+				if NormalMode or WeirdMode == true then return end
+				SlitHold()
+				wait(.35)
+				Slitting()
+				wait(1)
+				SlitHold()
+			end
+		end
+	end)

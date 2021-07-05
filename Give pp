@@ -1,0 +1,464 @@
+
+	game.Players.LocalPlayer.Character.Head.Transparency = 1
+	game.Players.LocalPlayer.Character.Head.face:Remove()
+	game.Players.LocalPlayer.Character.Torso.Transparency = 1
+	game.Players.LocalPlayer.Character['Right Arm'].Transparency = 1
+	game.Players.LocalPlayer.Character["Left Arm"].Transparency = 1
+	game.Players.LocalPlayer.Character["Right Leg"].Transparency = 1
+	game.Players.LocalPlayer.Character["Left Leg"].Transparency = 1
+
+	Local = game:GetService('Players').LocalPlayer
+	Char  = Local.Character
+	touched,tpdback = false, false
+	Local.CharacterAdded:connect(function(char)
+		if script.Disabled ~= true then
+			wait(.00001)
+			loc = Char.HumanoidRootPart.Position
+			Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+		end
+	end)
+	box = Instance.new('Part',workspace)
+	box.Anchored = true
+	box.Transparency = 1
+	box.CanCollide = true
+	box.Size = Vector3.new(10,1,10)
+	box.Position = Vector3.new(0,10000,0)
+	box.Touched:connect(function(part)
+		if (part.Parent.Name == Local.Name) then
+			if touched == false then
+				touched = true
+				function apply()
+					if script.Disabled ~= true then
+						no = Char.HumanoidRootPart:Clone()
+						wait(.0001)
+						Char.HumanoidRootPart:Destroy()
+						no.Parent = Char
+						Char:MoveTo(loc)
+						touched = false
+					end end
+				if Char then
+					apply()
+				end
+			end
+		end
+	end)
+	repeat wait() until Char
+	loc = Char.HumanoidRootPart.Position
+	Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+
+	wait(0.5)
+
+	--//=================================\\
+	--|| 	    𝙎𝙀𝙏𝙐𝙋 𝙁𝙐𝙉𝘾𝙏𝙄𝙊𝙉
+	--\\=================================//
+
+	local unanchoredparts = {}
+	local movers = {}
+	local tog = true
+	local move = false
+	local Player = game:GetService("Players").LocalPlayer
+	local Character = Player.Character
+	local mov = {};
+	local mov2 = {};
+
+	local x = -0.011   --Edit Position for head n +left and -Right
+	local y = -0.587   --Edit Position for head up and down
+	local z = -3.234 --Edit Position for head x3
+
+	local ClonedHats = {
+		bal   = Character:WaitForChild("Hat1"):Clone(),
+		pe1   = Character:WaitForChild("LavanderHair"):Clone(),
+		pe2   = Character:WaitForChild("Pal Hair"):Clone()
+	}
+
+	local RealHats = {
+		bal   = Character:WaitForChild("Hat1"),
+		pe1   = Character:WaitForChild("LavanderHair"),
+		pe2   = Character:WaitForChild("Pal Hair")
+	}
+
+	local DontRemoveMesh = {
+
+	}
+
+	--Dont touch below
+
+	local realign = coroutine.create(function()
+		while true do
+			game["Run Service"].Heartbeat:Wait()
+			RealHats.bal.Handle.CFrame = ClonedHats.bal.Handle.CFrame
+			RealHats.pe1.Handle.CFrame = ClonedHats.pe1.Handle.CFrame
+			RealHats.pe2.Handle.CFrame = ClonedHats.pe2.Handle.CFrame
+		end
+	end)
+	coroutine.resume(realign)
+
+	for i, v in next, ClonedHats do
+		if v then
+			v.Parent = Character
+			v.Handle.Transparency = 1
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	for i, v in next, RealHats do
+		if v then
+			v.Handle.CanCollide = false
+			v.Handle.AccessoryWeld:Destroy()
+			for u,Mesh in next, v:GetDescendants() do
+				if Mesh:IsA("Mesh") or Mesh:IsA("SpecialMesh") then
+					if table.find(DontRemoveMesh, Mesh.Parent.Parent.Name) then
+					else
+						Mesh:Destroy()
+					end
+				end
+			end
+		end
+	end
+
+	local function align(i,v)
+		local att0 = Instance.new("Attachment", i)
+		att0.Position = Vector3.new(0,0,0)
+		local att1 = Instance.new("Attachment", v)
+		att1.Position = Vector3.new(0,0,0)
+		local AP = Instance.new("AlignPosition", i)
+		AP.Attachment0 = att0
+		AP.Attachment1 = att1
+		AP.RigidityEnabled = false
+		AP.ReactionForceEnabled = false
+		AP.ApplyAtCenterOfMass = true
+		AP.MaxForce = 9999999
+		AP.MaxVelocity = math.huge
+		AP.Responsiveness = 65
+		local AO = Instance.new("AlignOrientation", i)
+		AO.Attachment0 = att0
+		AO.Attachment1 = att1
+		AO.ReactionTorqueEnabled = true
+		AO.PrimaryAxisOnly = false
+		AO.MaxTorque = 9999999
+		AO.MaxAngularVelocity = math.huge
+		AO.Responsiveness = 50
+	end
+
+	--Dont touch above
+
+	--//=================================\\
+	--|| 	 𝘼𝙏𝙏𝘼𝘾𝙃𝙈𝙀𝙉𝙏 𝘾𝙊𝙍𝙍𝙀𝘾𝙏𝙄𝙊𝙉𝙎
+	--\\=================================//
+
+	align(ClonedHats.bal.Handle, Character["HumanoidRootPart"])
+	align(ClonedHats.pe1.Handle, Character["HumanoidRootPart"])
+	align(ClonedHats.pe2.Handle, Character["HumanoidRootPart"])
+
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "BE1"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "PA1"
+	Character:WaitForChild("HumanoidRootPart"):FindFirstChild("Attachment").Name = "PA2"
+
+	--//=================================\\
+	--|| 	      𝙋𝘼𝙍𝙏 𝙇𝙊𝘾𝘼𝙇𝙎
+	--\\=================================//
+
+	local Ball = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("BE1")
+	local Pee1 = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("PA1")
+	local Pee2 = Character:WaitForChild("HumanoidRootPart"):FindFirstChild("PA2")
+
+	Ball.Orientation = Vector3.new(-0, 90, 0)
+	Ball.Position = Vector3.new(0, -1.336, 0.901)
+
+	Pee1.Orientation = Vector3.new(-0, 0, 0)
+	Pee1.Position = Vector3.new(0, -0.892, 0.354)
+
+	Pee2.Orientation = Vector3.new(-0, 0, 0)
+	Pee2.Position = Vector3.new(0, -0.892, -0.697)
+
+	--//=================================\\
+	--|| 	         𝙇𝙊𝘾𝘼𝙇𝙎
+	--\\=================================//
+
+	local IsGiving = false
+
+	local GivePPGui = Instance.new("ScreenGui")
+	local Holding = Instance.new("Frame")
+	local UICorner = Instance.new("UICorner")
+	local Base = Instance.new("Frame")
+	local UICorner_2 = Instance.new("UICorner")
+	local TextBox = Instance.new("TextBox")
+	local UICorner_3 = Instance.new("UICorner")
+	local Bar = Instance.new("Frame")
+	local GivePPButton = Instance.new("TextButton")
+	local UICorner_4 = Instance.new("UICorner")
+	local StopButton = Instance.new("TextButton")
+	local UICorner_5 = Instance.new("UICorner")
+	local Connect = Instance.new("Frame")
+	local Title = Instance.new("TextLabel")
+	local UIGradient = Instance.new("UIGradient")
+	local Close = Instance.new("TextButton")
+	local Base2 = Instance.new("Frame")
+	local UICorner_6 = Instance.new("UICorner")
+	local Message1 = Instance.new("TextLabel")
+	local Title2 = Instance.new("TextLabel")
+	local UIGradient2 = Instance.new("UIGradient")
+	local MakeSmallButton = Instance.new("TextButton")
+	local UICorner_7 = Instance.new("UICorner")
+	local MakeAverageButton = Instance.new("TextButton")
+	local UICorner_8 = Instance.new("UICorner")
+	local MakeBigButton = Instance.new("TextButton")
+	local UICorner_9 = Instance.new("UICorner")
+
+	--//=================================\\
+	--|| 	          𝙂𝙐𝙄
+	--\\=================================//
+
+	GivePPGui.Name = "GivePPGui"
+	GivePPGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	GivePPGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	Holding.Name = "Holding"
+	Holding.Parent = GivePPGui
+	Holding.Active = true
+	Holding.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	Holding.BorderSizePixel = 0
+	Holding.Position = UDim2.new(0.548722804, 0, 0.229601517, 0)
+	Holding.Selectable = true
+	Holding.Size = UDim2.new(0, 259, 0, 64)
+	Holding.Draggable = true
+
+	UICorner.Parent = Holding
+
+	Base.Name = "Base"
+	Base.Parent = Holding
+	Base.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+	Base.BorderSizePixel = 0
+	Base.Position = UDim2.new(0, 0, 0.778999984, 0)
+	Base.Size = UDim2.new(0, 259, 0, 246)
+
+	UICorner_2.Parent = Base
+
+	TextBox.Parent = Base
+	TextBox.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	TextBox.Position = UDim2.new(0.0540540554, 0, 0.0569105707, 0)
+	TextBox.Size = UDim2.new(0, 230, 0, 57)
+	TextBox.Font = Enum.Font.SourceSansSemibold
+	TextBox.PlaceholderText = "Players EXACT name"
+	TextBox.Text = ""
+	TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextSize = 20.000
+
+	UICorner_3.Parent = TextBox
+
+	Bar.Name = "Bar"
+	Bar.Parent = Base
+	Bar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Bar.BorderSizePixel = 0
+	Bar.Position = UDim2.new(0.147, 0, 0.375, 0)
+	Bar.Size = UDim2.new(0, 181, 0, 1)
+
+	GivePPButton.Name = "GivePPButton"
+	GivePPButton.Parent = Base
+	GivePPButton.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	GivePPButton.Position = UDim2.new(0.185328186, 0, 0.471544743, 0)
+	GivePPButton.Size = UDim2.new(0, 162, 0, 42)
+	GivePPButton.Font = Enum.Font.SourceSansSemibold
+	GivePPButton.Text = "Give PP"
+	GivePPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	GivePPButton.TextSize = 20.000
+
+	UICorner_4.Parent = GivePPButton
+
+	StopButton.Name = "StopButton"
+	StopButton.Parent = Base
+	StopButton.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	StopButton.Position = UDim2.new(0.185328186, 0, 0.731707335, 0)
+	StopButton.Size = UDim2.new(0, 162, 0, 42)
+	StopButton.Font = Enum.Font.SourceSansSemibold
+	StopButton.Text = "Stop"
+	StopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	StopButton.TextSize = 20.000
+
+	UICorner_5.Parent = StopButton
+
+	Connect.Name = "Connect"
+	Connect.Parent = Holding
+	Connect.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+	Connect.BorderSizePixel = 0
+	Connect.Position = UDim2.new(0, 0, 0.685250282, 0)
+	Connect.Size = UDim2.new(0, 259, 0, 12)
+
+	Title.Name = "Title"
+	Title.Parent = Holding
+	Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title.BackgroundTransparency = 1.000
+	Title.Position = UDim2.new(0.0399999991, 0, 0, 0)
+	Title.Size = UDim2.new(0, 200, 0, 43)
+	Title.Font = Enum.Font.SourceSansSemibold
+	Title.Text = "Give PP | DinoX"
+	Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title.TextSize = 25.000
+	Title.TextXAlignment = Enum.TextXAlignment.Left
+
+	UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 115, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+	UIGradient.Parent = Title
+
+	Close.Name = "Close"
+	Close.Parent = Holding
+	Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Close.BackgroundTransparency = 1.000
+	Close.Position = UDim2.new(0.799227774, 0, 0, 0)
+	Close.Size = UDim2.new(0, 52, 0, 43)
+	Close.Font = Enum.Font.SourceSansSemibold
+	Close.Text = "X"
+	Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Close.TextSize = 25.000
+
+	Base2.Name = "Base2"
+	Base2.Parent = Holding
+	Base2.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+	Base2.BorderSizePixel = 0
+	Base2.Position = UDim2.new(-0.907335937, 0, 1.88837528, 0)
+	Base2.Size = UDim2.new(0, 249, 0, 175)
+
+	UICorner_6.Parent = Base2
+
+	Message1.Name = "Message1"
+	Message1.Parent = Base2
+	Message1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Message1.BackgroundTransparency = 1.000
+	Message1.Position = UDim2.new(0.0963855386, 0, 0.119999997, 0)
+	Message1.Size = UDim2.new(0, 200, 0, 33)
+	Message1.Font = Enum.Font.SourceSansSemibold
+	Message1.Text = "(if hats fall just close this and re execute)"
+	Message1.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Message1.TextSize = 14.000
+
+	Title2.Name = "Title2"
+	Title2.Parent = Base2
+	Title2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Title2.BackgroundTransparency = 1.000
+	Title2.Position = UDim2.new(0.0963855386, 0, 0, 0)
+	Title2.Size = UDim2.new(0, 200, 0, 29)
+	Title2.Font = Enum.Font.SourceSansSemibold
+	Title2.Text = "Settings"
+	Title2.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Title2.TextSize = 22.000
+
+	UIGradient2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 115, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 255, 255))}
+	UIGradient2.Name = "UIGradient2"
+	UIGradient2.Parent = Title2
+
+	MakeSmallButton.Name = "MakeSmallButton"
+	MakeSmallButton.Parent = Base2
+	MakeSmallButton.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	MakeSmallButton.Position = UDim2.new(0.174349859, 0, 0.308130234, 0)
+	MakeSmallButton.Size = UDim2.new(0, 162, 0, 27)
+	MakeSmallButton.Font = Enum.Font.SourceSansSemibold
+	MakeSmallButton.Text = "Make Smaller"
+	MakeSmallButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	MakeSmallButton.TextSize = 18.000
+
+	UICorner_7.Parent = MakeSmallButton
+
+	MakeAverageButton.Name = "MakeAverageButton"
+	MakeAverageButton.Parent = Base2
+	MakeAverageButton.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	MakeAverageButton.Position = UDim2.new(0.174349874, 0, 0.496701688, 0)
+	MakeAverageButton.Size = UDim2.new(0, 162, 0, 27)
+	MakeAverageButton.Font = Enum.Font.SourceSansSemibold
+	MakeAverageButton.Text = "Make Average"
+	MakeAverageButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	MakeAverageButton.TextSize = 18.000
+
+	UICorner_8.Parent = MakeAverageButton
+
+	MakeBigButton.Name = "MakeBigButton"
+	MakeBigButton.Parent = Base2
+	MakeBigButton.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+	MakeBigButton.Position = UDim2.new(0.173999995, 0, 0.699999988, 0)
+	MakeBigButton.Size = UDim2.new(0, 162, 0, 27)
+	MakeBigButton.Font = Enum.Font.SourceSansSemibold
+	MakeBigButton.Text = "Make Bigger"
+	MakeBigButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	MakeBigButton.TextSize = 18.000
+
+	UICorner_9.Parent = MakeBigButton
+
+	Close.MouseButton1Click:Connect(function()
+		IsGiving = false
+		GivePPGui:Destroy()
+		game.Players.LocalPlayer.Character:Destroy()
+	end)
+
+	--//=================================\\
+	--|| 	       𝙁𝙐𝙉𝘾𝙏𝙄𝙊𝙉𝙎
+	--\\=================================//
+
+	GivePPButton.MouseButton1Click:Connect(function()
+		if workspace:FindFirstChild(TextBox.Text).Humanoid then
+			IsGiving = true
+			while wait() do
+				if IsGiving == false then return end
+				if IsGiving == true then
+					if IsGiving == false then return end
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:FindFirstChild(TextBox.Text).HumanoidRootPart.CFrame + workspace:FindFirstChild(TextBox.Text).HumanoidRootPart.CFrame.LookVector * 2
+				end
+			end
+		else
+			TextBox.Text = "Make sure to put the exact username"
+		end
+	end)
+
+	MakeAverageButton.MouseButton1Click:Connect(function()
+		Ball.Orientation = Vector3.new(-0, 90, 0)
+		Ball.Position = Vector3.new(0, -1.336, 0.901)
+
+		Pee1.Orientation = Vector3.new(-0, 0, 0)
+		Pee1.Position = Vector3.new(0, -0.892, 0.354)
+
+		Pee2.Orientation = Vector3.new(-0, 0, 0)
+		Pee2.Position = Vector3.new(0, -0.892, -0.697)
+	end)
+
+	MakeBigButton.MouseButton1Click:Connect(function()
+		Ball.Orientation = Vector3.new(-0, 90, 0)
+		Ball.Position = Vector3.new(0, -1.336, 0.901)
+
+		Pee1.Orientation = Vector3.new(-0, 0, 0)
+		Pee1.Position = Vector3.new(0, -0.892, 0.354)
+
+		Pee2.Orientation = Vector3.new(-0, 0, 0)
+		Pee2.Position = Vector3.new(0, -0.892, -1.621)
+	end)
+
+	MakeSmallButton.MouseButton1Click:Connect(function()
+		Ball.Orientation = Vector3.new(-0, 90, 0)
+		Ball.Position = Vector3.new(0, -1.336, 0.901)
+
+		Pee1.Orientation = Vector3.new(-0, 0, 0)
+		Pee1.Position = Vector3.new(0, -0.892, 0.354)
+
+		Pee2.Orientation = Vector3.new(-0, 0, 0)
+		Pee2.Position = Vector3.new(0, -0.892, 0.354)
+	end)
+
+	StopButton.MouseButton1Click:Connect(function()
+		IsGiving = false
+	end)
+
+	local qwqwe = coroutine.create(function()
+		while wait() do
+			if UIGradient.Rotation >= 1000 then 
+				UIGradient.Rotation = 0
+				UIGradient2.Rotation = 0
+			end
+			UIGradient2.Rotation = UIGradient2.Rotation + 5
+			UIGradient.Rotation = UIGradient.Rotation + 5
+		end
+	end)
+	coroutine.resume(qwqwe)
